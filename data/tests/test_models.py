@@ -1,34 +1,37 @@
-from data.models import Company
+from data.models import CensusRecord, SankeyNode, SankeyLink, SankeyData
 
 
-def test_company_with_all_fields():
-    c = Company(
-        id="sec-AAPL",
-        name="Apple Inc.",
-        industry="Technology",
-        employeeCount=164000,
-        employeeBucket="10K+",
-        revenue=394328000000,
-        revenueBucket="$1B+",
-        country="US",
-        source="sec-edgar",
+def test_census_record_creation():
+    record = CensusRecord(
+        source_dimension="industry",
+        source_value="Manufacturing",
+        target_dimension="employeeSize",
+        target_value="100-249",
+        firms=13573,
+        employees=943335,
     )
-    assert c.name == "Apple Inc."
-    assert c.industry == "Technology"
-    assert c.employeeBucket == "10K+"
+    assert record.firms == 13573
+    assert record.employees == 943335
+    assert record.source_dimension == "industry"
 
 
-def test_company_with_null_fields():
-    c = Company(
-        id="wiki-123",
-        name="Small Corp",
-        industry="Retail",
-        employeeCount=None,
-        employeeBucket=None,
-        revenue=None,
-        revenueBucket=None,
-        country="DE",
-        source="wikidata",
+def test_sankey_link_has_firms_and_employees():
+    link = SankeyLink(
+        source="industry:Manufacturing",
+        target="employeeSize:100-249",
+        firms=13573,
+        employees=943335,
     )
-    assert c.employeeCount is None
-    assert c.revenue is None
+    assert link.firms == 13573
+    assert link.employees == 943335
+
+
+def test_sankey_data_has_available_pairs():
+    data = SankeyData(
+        dimensions=["industry", "employeeSize", "revenueSize"],
+        nodes=[],
+        links=[],
+        availablePairs=[("industry", "employeeSize"), ("industry", "revenueSize")],
+    )
+    assert len(data.availablePairs) == 2
+    assert ("industry", "employeeSize") in data.availablePairs

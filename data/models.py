@@ -1,16 +1,14 @@
 from pydantic import BaseModel
 
 
-class Company(BaseModel):
-    id: str
-    name: str
-    industry: str
-    employeeCount: int | None
-    employeeBucket: str | None
-    revenue: float | None
-    revenueBucket: str | None
-    country: str
-    source: str
+class CensusRecord(BaseModel):
+    """A single cell from a Census cross-tabulation."""
+    source_dimension: str
+    source_value: str
+    target_dimension: str
+    target_value: str
+    firms: int
+    employees: int
 
 
 class SankeyNode(BaseModel):
@@ -22,10 +20,12 @@ class SankeyNode(BaseModel):
 class SankeyLink(BaseModel):
     source: str
     target: str
-    value: int
+    firms: int
+    employees: int
 
 
 class SankeyData(BaseModel):
     dimensions: list[str]
     nodes: list[SankeyNode]
     links: list[SankeyLink]
+    availablePairs: list[tuple[str, str]]
