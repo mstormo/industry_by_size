@@ -56,3 +56,19 @@ def test_normalize_companies_applies_buckets_and_industry():
     assert result[0].industry == "Technology"
     assert result[0].employeeBucket == "50-99"
     assert result[0].revenueBucket == "$1-5M"
+
+
+def test_normalize_companies_drops_incomplete():
+    companies = [
+        Company(id="a", name="Complete Corp", industry="tech",
+                employeeCount=50, employeeBucket=None,
+                revenue=2_000_000, revenueBucket=None,
+                country="US", source="test"),
+        Company(id="b", name="Incomplete Corp", industry="finance",
+                employeeCount=None, employeeBucket=None,
+                revenue=None, revenueBucket=None,
+                country="US", source="test"),
+    ]
+    result = normalize_companies(companies)
+    assert len(result) == 1
+    assert result[0].name == "Complete Corp"

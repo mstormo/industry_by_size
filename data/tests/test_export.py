@@ -53,6 +53,28 @@ def test_generate_sankey_data_links_count():
     assert link.value == 1
 
 
+def test_generate_sankey_data_all_six_dimension_pairs():
+    data = generate_sankey_data(SAMPLE_COMPANIES)
+    links_by_pair = {}
+    for link in data.links:
+        src_dim = link.source.split(":")[0]
+        tgt_dim = link.target.split(":")[0]
+        pair = (src_dim, tgt_dim)
+        links_by_pair.setdefault(pair, []).append(link)
+
+    expected_pairs = [
+        ("industry", "employeeBucket"),
+        ("industry", "revenueBucket"),
+        ("employeeBucket", "industry"),
+        ("employeeBucket", "revenueBucket"),
+        ("revenueBucket", "industry"),
+        ("revenueBucket", "employeeBucket"),
+    ]
+    for pair in expected_pairs:
+        assert pair in links_by_pair, f"Missing dimension pair: {pair[0]} -> {pair[1]}"
+        assert len(links_by_pair[pair]) > 0, f"No links for pair: {pair[0]} -> {pair[1]}"
+
+
 def test_generate_sankey_data_excludes_null_from_relevant_links():
     data = generate_sankey_data(SAMPLE_COMPANIES)
     # NoRevenue company (id=4) should not appear in revenue links
