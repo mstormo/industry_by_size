@@ -23,7 +23,7 @@ No API key required. Returns JSON arrays. Free, public, authoritative.
 
 **NOT available:** Employee Size × Revenue Size (Census suppresses this three-way cross-tab for disclosure avoidance).
 
-### NAICS Sectors (17)
+### NAICS Sectors (18)
 
 | Code | Label |
 |------|-------|
@@ -38,12 +38,15 @@ No API key required. Returns JSON arrays. Free, public, authoritative.
 | 52 | Finance and insurance |
 | 53 | Real estate and rental and leasing |
 | 54 | Professional, scientific, and technical services |
+| 55 | Management of companies and enterprises |
 | 56 | Administrative and support and waste management |
 | 61 | Educational services |
 | 62 | Health care and social assistance |
 | 71 | Arts, entertainment, and recreation |
 | 72 | Accommodation and food services |
 | 81 | Other services (except public administration) |
+
+Note: Sector 55 data may be heavily suppressed. Include it if the API returns it; omit gracefully if all values are suppressed.
 
 ### Employment Size Codes (8 brackets, from EMPSZFF)
 
@@ -94,7 +97,13 @@ class CensusRecord(BaseModel):
     employees: int             # number of employees
 ```
 
-The Sankey data model (`SankeyNode`, `SankeyLink`, `SankeyData`) stays the same, but `SankeyLink.value` is contextualized by a `metric` field or determined at render time.
+`RCPTOT` (total revenue) is intentionally dropped — the Sankey visualizes firm count and employee count only. Revenue totals per cell are not needed for the current UI.
+
+**Modified file:** `data/models.py`
+- Add `CensusRecord` model (above)
+- Update `SankeyLink`: add `employees: int` field
+- Update `SankeyData`: add `availablePairs: list[tuple[str, str]]` field
+- Remove `Company` model (no longer used)
 
 ### Pipeline Changes
 
@@ -103,6 +112,8 @@ The Sankey data model (`SankeyNode`, `SankeyLink`, `SankeyData`) stays the same,
 - `fetch_industry_by_revenue()` — calls ecnsize API with RCPSZFF × NAICS2022
 - Parse JSON responses into `CensusRecord` lists
 - Map Census size codes to human-readable labels
+- **Suppressed values:** Census returns `"D"` instead of a number when a cell is suppressed for disclosure avoidance. Treat suppressed values as 0 (the firms exist but we can't show the exact count). Log a warning with the suppressed cell coordinates.
+- **Error handling:** Retry up to 3 times with exponential backoff (1s, 2s, 4s) on HTTP errors or timeouts. Raise after exhausting retries. Timeout: 30 seconds per request.
 
 **Modified file:** `data/export.py`
 - New function `generate_sankey_from_census(records)` that builds nodes and links directly from aggregate records
@@ -133,7 +144,7 @@ The Sankey data model (`SankeyNode`, `SankeyLink`, `SankeyData`) stays the same,
     {
       "source": "industry:Manufacturing",
       "target": "employeeSize:100-249",
-      "value": 13573,
+      "firms": 13573,
       "employees": 943335
     }
   ],
@@ -145,21 +156,31 @@ The Sankey data model (`SankeyNode`, `SankeyLink`, `SankeyData`) stays the same,
 ```
 
 Key changes from current format:
-- Each link now has both `value` (firm count) and `employees` (employee count)
-- New `availablePairs` field lists which dimension pairs have real data
+- Each link now has `firms` (firm count) and `employees` (employee count) — no ambiguous `value` field
+- New `availablePairs` field lists which dimension pairs have real data (stored as `[source, target]` with industry always as source)
 - Dimension names change: `employeeBucket` → `employeeSize`, `revenueBucket` → `revenueSize`
+
+### Reverse Links and Direction
+
+Links are stored **unidirectional** with industry always as source: `industry → employeeSize` and `industry → revenueSize`. The data file does NOT contain reverse-direction links.
+
+When the user selects a starting dimension that is NOT industry (e.g., starts at `employeeSize`), `filterSankeyForDrill` flips the lookup: it matches links where the **target** starts with the user's source dimension and the **source** starts with the user's target dimension, then swaps `source`/`target` in the returned links. This avoids doubling the data size.
+
+Default metric on page load: **firms**.
 
 ### Frontend Changes
 
 **`src/types.ts`:**
 - Update `Dimension` type: `'industry' | 'employeeSize' | 'revenueSize'`
-- Add `employees: number` to `SankeyLink`
-- Add `availablePairs: [string, string][]` to `SankeyData`
+- Update `SankeyLink`: replace `value: number` with `firms: number` and `employees: number`
+- Add `availablePairs: [Dimension, Dimension][]` to `SankeyData`
 - Add `Metric` type: `'firms' | 'employees'`
 
 **`src/data.ts`:**
-- `filterSankeyForDrill` respects `availablePairs` — returns empty if pair not available
-- New `getMetricValue(link, metric)` helper
+- `filterSankeyForDrill` checks `availablePairs` for the requested source→target pair. If the pair is not available in either direction, returns empty `{ nodes: [], links: [] }`.
+- For reverse pairs (e.g., user wants `employeeSize → industry` but data has `industry → employeeSize`), `filterSankeyForDrill` matches links by swapping source/target roles and returns links with source/target flipped.
+- `getAvailableDimensions` updated to accept `availablePairs` and only return dimensions that form a valid pair with the current path.
+- New `getMetricValue(link, metric)` helper: returns `link.firms` for `'firms'`, `link.employees` for `'employees'`.
 
 **`src/controls.ts`:**
 - Add metric toggle (Firms / Employees) to the top bar
@@ -176,6 +197,7 @@ Key changes from current format:
 **`src/main.ts`:**
 - Wire up metric toggle
 - Pass metric through refresh cycle
+- `handleNodeClick` checks `availablePairs` before allowing drill-down; if the next dimension would form an unavailable pair, skip it or show a message
 
 **`public/index.html`:**
 - Add metric toggle buttons to the top bar
