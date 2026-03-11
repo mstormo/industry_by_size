@@ -1,17 +1,17 @@
 import * as d3 from 'd3';
 import { sankey, sankeyLinkHorizontal, SankeyGraph } from 'd3-sankey';
-import type { SankeyNode, FilteredSankey } from './types';
+import type { SankeyNode, FilteredSankey, Metric } from './types';
+import { getMetricValue } from './data';
 
-// Color palette for dimensions
 const DIMENSION_COLORS: Record<string, readonly string[]> = {
   industry: ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#7c3aed',
              '#4f46e5', '#5b21b6', '#7e22ce', '#9333ea', '#a855f7',
              '#6d28d9', '#4338ca', '#3730a3', '#312e81'],
-  employeeBucket: ['#22d3ee', '#06b6d4', '#0891b2', '#0e7490', '#155e75',
-                    '#164e63', '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4',
-                    '#99f6e4'],
-  revenueBucket: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f',
-                  '#f97316', '#ea580c', '#c2410c'],
+  employeeSize: ['#22d3ee', '#06b6d4', '#0891b2', '#0e7490', '#155e75',
+                  '#164e63', '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4',
+                  '#99f6e4'],
+  revenueSize: ['#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f',
+                '#f97316', '#ea580c', '#c2410c'],
 };
 
 interface SankeyCallbacks {
@@ -37,6 +37,7 @@ export function renderSankey(
   svgElement: SVGSVGElement,
   data: FilteredSankey,
   callbacks: SankeyCallbacks,
+  metric: Metric,
 ): void {
   const svg = d3.select(svgElement);
   const { width, height } = svgElement.getBoundingClientRect();
@@ -51,7 +52,9 @@ export function renderSankey(
       .attr('y', height / 2)
       .attr('text-anchor', 'middle')
       .attr('fill', '#94a3b8')
-      .text('No data to display');
+      .text(data.unavailablePair
+        ? 'This dimension combination is not available in Census data.'
+        : 'No data to display');
     return;
   }
 
@@ -62,7 +65,7 @@ export function renderSankey(
     .map(l => ({
       source: nodeMap.get(l.source)!,
       target: nodeMap.get(l.target)!,
-      value: l.value,
+      value: getMetricValue(l, metric),
     }));
 
   const sankeyLayout = sankey<D3SankeyNode, any>()
@@ -83,7 +86,6 @@ export function renderSankey(
     return colors[idx % colors.length];
   }
 
-  // Draw links
   const linkGroup = svg.append('g').attr('class', 'links');
   const linkPaths = linkGroup.selectAll('.sankey-link')
     .data(graph.links)
@@ -93,7 +95,6 @@ export function renderSankey(
     .attr('stroke', (d: D3SankeyLink) => getNodeColor(d.source))
     .attr('stroke-width', (d: D3SankeyLink) => Math.max(1, d.width || 1));
 
-  // Draw nodes
   const nodeGroup = svg.append('g').attr('class', 'nodes');
   const nodeElements = nodeGroup.selectAll('.sankey-node')
     .data(graph.nodes)
@@ -120,7 +121,6 @@ export function renderSankey(
       callbacks.onNodeHover(null);
     });
 
-  // Add labels
   nodeElements.append('text')
     .attr('x', (d: D3SankeyNode) => (d.x0! < width / 2 ? sankeyLayout.nodeWidth() + 6 : -6))
     .attr('y', (d: D3SankeyNode) => (d.y1! - d.y0!) / 2)

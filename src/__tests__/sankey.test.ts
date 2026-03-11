@@ -4,15 +4,15 @@ import type { FilteredSankey, SankeyNode } from '../types';
 
 const MOCK_FILTERED: FilteredSankey = {
   nodes: [
-    { id: 'industry:Technology', label: 'Technology', dimension: 'industry' },
-    { id: 'industry:Healthcare', label: 'Healthcare', dimension: 'industry' },
-    { id: 'employeeBucket:100-249', label: '100-249', dimension: 'employeeBucket' },
-    { id: 'employeeBucket:10K+', label: '10K+', dimension: 'employeeBucket' },
+    { id: 'industry:Manufacturing', label: 'Manufacturing', dimension: 'industry' },
+    { id: 'industry:Information', label: 'Information', dimension: 'industry' },
+    { id: 'employeeSize:100-249', label: '100-249', dimension: 'employeeSize' },
+    { id: 'employeeSize:500+', label: '500+', dimension: 'employeeSize' },
   ],
   links: [
-    { source: 'industry:Technology', target: 'employeeBucket:100-249', value: 25 },
-    { source: 'industry:Technology', target: 'employeeBucket:10K+', value: 8 },
-    { source: 'industry:Healthcare', target: 'employeeBucket:100-249', value: 15 },
+    { source: 'industry:Manufacturing', target: 'employeeSize:100-249', firms: 13573, employees: 943335 },
+    { source: 'industry:Manufacturing', target: 'employeeSize:500+', firms: 3200, employees: 2100000 },
+    { source: 'industry:Information', target: 'employeeSize:100-249', firms: 8500, employees: 590000 },
   ],
 };
 
@@ -37,7 +37,7 @@ describe('renderSankey', () => {
 
   it('renders nodes and links for valid data', () => {
     const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, MOCK_FILTERED, callbacks);
+    renderSankey(svg, MOCK_FILTERED, callbacks, 'firms');
 
     const nodes = svg.querySelectorAll('.sankey-node');
     expect(nodes.length).toBe(4);
@@ -48,10 +48,18 @@ describe('renderSankey', () => {
 
   it('shows empty message when no data', () => {
     const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, { nodes: [], links: [] }, callbacks);
+    renderSankey(svg, { nodes: [], links: [] }, callbacks, 'firms');
 
     const text = svg.querySelector('text');
     expect(text?.textContent).toBe('No data to display');
+  });
+
+  it('shows unavailable pair message when flagged', () => {
+    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
+    renderSankey(svg, { nodes: [], links: [], unavailablePair: true }, callbacks, 'firms');
+
+    const text = svg.querySelector('text');
+    expect(text?.textContent).toBe('This dimension combination is not available in Census data.');
   });
 
   it('fires onNodeClick callback', () => {
@@ -60,10 +68,17 @@ describe('renderSankey', () => {
       onNodeClick: (node: SankeyNode) => { clickedNode = node; },
       onNodeHover: () => {},
     };
-    renderSankey(svg, MOCK_FILTERED, callbacks);
+    renderSankey(svg, MOCK_FILTERED, callbacks, 'firms');
 
     const rect = svg.querySelector('.sankey-node rect') as SVGRectElement;
     rect?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(clickedNode).not.toBeNull();
+  });
+
+  it('uses employees metric when specified', () => {
+    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
+    renderSankey(svg, MOCK_FILTERED, callbacks, 'employees');
+    const nodes = svg.querySelectorAll('.sankey-node');
+    expect(nodes.length).toBe(4);
   });
 });
