@@ -2,17 +2,18 @@ import { loadSankeyData, filterSankeyForDrill, getAvailableDimensions } from './
 import { renderSankey } from './sankey';
 import { initControls, updateBreadcrumb } from './controls';
 import { updateSidebar } from './sidebar';
-import type { SankeyData, SankeyNode, DrillState, Dimension, FilteredSankey } from './types';
+import type { SankeyData, SankeyNode, DrillState, Dimension, Metric, FilteredSankey } from './types';
 
 let sankeyData: SankeyData;
 let currentState: DrillState = {
-  path: ['industry', 'employeeBucket'],
+  path: ['industry', 'employeeSize'],
   selections: [],
 };
+let currentMetric: Metric = 'firms';
 let currentFiltered: FilteredSankey;
 
-function getDefaultSecondDimension(startDim: Dimension): Dimension {
-  const available = getAvailableDimensions([startDim]);
+function getDefaultSecondDimension(startDim: Dimension): Dimension | undefined {
+  const available = getAvailableDimensions([startDim], sankeyData.availablePairs);
   return available[0];
 }
 
@@ -24,13 +25,13 @@ function refresh(): void {
   renderSankey(svg, currentFiltered, {
     onNodeClick: handleNodeClick,
     onNodeHover: handleNodeHover,
-  });
-  updateSidebar(currentFiltered, null);
+  }, currentMetric);
+  updateSidebar(currentFiltered, null, currentMetric);
   updateBreadcrumb(currentState, handleBreadcrumbClick);
 }
 
 function handleNodeClick(node: SankeyNode): void {
-  const available = getAvailableDimensions(currentState.path);
+  const available = getAvailableDimensions(currentState.path, sankeyData.availablePairs);
   if (available.length === 0) return;
 
   currentState = {
@@ -41,7 +42,7 @@ function handleNodeClick(node: SankeyNode): void {
 }
 
 function handleNodeHover(node: SankeyNode | null): void {
-  updateSidebar(currentFiltered, node);
+  updateSidebar(currentFiltered, node, currentMetric);
 }
 
 function handleBreadcrumbClick(level: number): void {
@@ -54,10 +55,16 @@ function handleBreadcrumbClick(level: number): void {
 
 function handleDimensionChange(dimension: Dimension): void {
   const secondDim = getDefaultSecondDimension(dimension);
+  if (!secondDim) return;
   currentState = {
     path: [dimension, secondDim],
     selections: [],
   };
+  refresh();
+}
+
+function handleMetricChange(metric: Metric): void {
+  currentMetric = metric;
   refresh();
 }
 
@@ -80,6 +87,7 @@ async function init(): Promise<void> {
 
   initControls({
     onDimensionChange: handleDimensionChange,
+    onMetricChange: handleMetricChange,
   });
 
   let resizeTimer: ReturnType<typeof setTimeout>;
