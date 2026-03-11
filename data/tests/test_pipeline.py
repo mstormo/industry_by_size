@@ -1,33 +1,46 @@
 import json
 from unittest.mock import patch
 from data.pipeline import run_pipeline
-from data.models import Company
+from data.models import CensusRecord
 
 
-def _mock_companies(source: str, count: int) -> list[Company]:
+def _mock_emp_records() -> list[CensusRecord]:
     return [
-        Company(
-            id=f"{source}-{i}", name=f"{source} Corp {i}", industry="Technology",
-            employeeCount=100 * (i + 1), employeeBucket=None,
-            revenue=1_000_000 * (i + 1), revenueBucket=None,
-            country="US", source=source,
-        )
-        for i in range(count)
+        CensusRecord(
+            source_dimension="industry", source_value="Manufacturing",
+            target_dimension="employeeSize", target_value="100-249",
+            firms=13573, employees=943335,
+        ),
+        CensusRecord(
+            source_dimension="industry", source_value="Information",
+            target_dimension="employeeSize", target_value="500+",
+            firms=1200, employees=890000,
+        ),
     ]
 
 
-@patch("data.pipeline.fetch_oc_companies", return_value=_mock_companies("oc", 2))
-@patch("data.pipeline.fetch_wikidata_companies", return_value=_mock_companies("wiki", 3))
-@patch("data.pipeline.fetch_edgar_companies", return_value=_mock_companies("edgar", 2))
-def test_run_pipeline_produces_output_files(mock_edgar, mock_wiki, mock_oc, tmp_path):
-    run_pipeline(str(tmp_path), max_edgar=2, max_wikidata=3, max_oc_pages=1)
+def _mock_rev_records() -> list[CensusRecord]:
+    return [
+        CensusRecord(
+            source_dimension="industry", source_value="Manufacturing",
+            target_dimension="revenueSize", target_value="$1-2.5M",
+            firms=18000, employees=250000,
+        ),
+    ]
 
-    assert (tmp_path / "companies.json").exists()
-    assert (tmp_path / "sankey-data.json").exists()
 
-    companies = json.loads((tmp_path / "companies.json").read_text())
-    assert len(companies) == 7  # 2 + 3 + 2, no duplicates
+@patch("data.pipeline.fetch_industry_by_revenue", return_value=_mock_rev_records())
+@patch("data.pipeline.fetch_industry_by_employment", return_value=_mock_emp_records())
+def test_run_pipeline_produces_sankey_json(mock_emp, mock_rev, tmp_path):
+    run_pipeline(str(tmp_path / "sankey-data.json"))
 
-    sankey = json.loads((tmp_path / "sankey-data.json").read_text())
+    output = tmp_path / "sankey-data.json"
+    assert output.exists()
+
+    sankey = json.loads(output.read_text())
     assert len(sankey["nodes"]) > 0
-    assert len(sankey["links"]) > 0
+    assert len(sankey["links"]) == 3
+    assert "availablePairs" in sankey
+    # Verify links have firms/employees
+    assert "firms" in sankey["links"][0]
+    assert "employees" in sankey["links"][0]

@@ -5,3 +5,4 @@ node_modules/
 dist/
 public/data/companies.json
 public/data/sankey-data.json
+__pycache__/

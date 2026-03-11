@@ -1,52 +1,36 @@
-"""Orchestrate the full data pipeline: fetch -> normalize -> export."""
+"""Fetch Census data and generate Sankey JSON."""
 import argparse
 
-from data.sources.sec_edgar import fetch_edgar_companies
-from data.sources.wikidata import fetch_wikidata_companies
-from data.sources.opencorporates import fetch_oc_companies
-from data.normalize import normalize_companies
-from data.export import export_to_files
+from data.sources.census import fetch_industry_by_employment, fetch_industry_by_revenue
+from data.export import generate_sankey_from_census, export_census_to_file
 
 
-def run_pipeline(
-    output_dir: str,
-    max_edgar: int = 500,
-    max_wikidata: int = 2000,
-    max_oc_pages: int = 10,
-) -> None:
-    print("Fetching from SEC EDGAR...")
-    edgar = fetch_edgar_companies(max_companies=max_edgar)
-    print(f"  Got {len(edgar)} companies from EDGAR")
+def run_pipeline(output_path: str) -> None:
+    print("Fetching Industry x Employment Size from Census API...")
+    emp_records = fetch_industry_by_employment()
+    print(f"  Got {len(emp_records)} records")
 
-    print("Fetching from Wikidata...")
-    wiki = fetch_wikidata_companies(limit=max_wikidata)
-    print(f"  Got {len(wiki)} companies from Wikidata")
+    print("Fetching Industry x Revenue Size from Census API...")
+    rev_records = fetch_industry_by_revenue()
+    print(f"  Got {len(rev_records)} records")
 
-    print("Fetching from OpenCorporates...")
-    oc = fetch_oc_companies(max_pages=max_oc_pages)
-    print(f"  Got {len(oc)} companies from OpenCorporates")
+    all_records = emp_records + rev_records
+    print(f"Total records: {len(all_records)}")
 
-    all_companies = edgar + wiki + oc
-    print(f"\nTotal raw: {len(all_companies)}")
+    print("Generating Sankey data...")
+    sankey = generate_sankey_from_census(all_records)
+    print(f"  {len(sankey.nodes)} nodes, {len(sankey.links)} links")
 
-    print("Normalizing...")
-    normalized = normalize_companies(all_companies)
-    print(f"After normalization: {len(normalized)}")
-
-    print(f"Exporting to {output_dir}...")
-    export_to_files(normalized, output_dir)
+    print(f"Exporting to {output_path}...")
+    export_census_to_file(sankey, output_path)
     print("Done!")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run the data pipeline")
+    parser = argparse.ArgumentParser(description="Fetch Census data and generate Sankey JSON")
     parser.add_argument(
-        "--output", default="../public/data",
-        help="Output directory for JSON files",
+        "--output", default="../public/data/sankey-data.json",
+        help="Output path for sankey-data.json",
     )
-    parser.add_argument("--max-edgar", type=int, default=500)
-    parser.add_argument("--max-wikidata", type=int, default=2000)
-    parser.add_argument("--max-oc-pages", type=int, default=10)
     args = parser.parse_args()
-
-    run_pipeline(args.output, args.max_edgar, args.max_wikidata, args.max_oc_pages)
+    run_pipeline(args.output)
