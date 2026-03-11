@@ -13,7 +13,7 @@ export interface Company {
 export interface SankeyNode {
   id: string;
   label: string;
-  dimension: string;
+  dimension: Dimension;
 }
 
 export interface SankeyLink {
@@ -29,6 +29,11 @@ export interface SankeyData {
 }
 
 export type Dimension = 'industry' | 'employeeBucket' | 'revenueBucket';
+
+export interface FilteredSankey {
+  nodes: SankeyNode[];
+  links: SankeyLink[];
+}
 
 export interface DrillState {
   /** The ordered sequence of dimensions as the user drills down */

@@ -1,4 +1,4 @@
-import type { SankeyData, SankeyNode, SankeyLink, DrillState, Dimension } from './types';
+import type { SankeyData, DrillState, Dimension, FilteredSankey } from './types';
 
 const ALL_DIMENSIONS: Dimension[] = ['industry', 'employeeBucket', 'revenueBucket'];
 
@@ -7,17 +7,13 @@ let cachedData: SankeyData | null = null;
 export async function loadSankeyData(): Promise<SankeyData> {
   if (cachedData) return cachedData;
   const resp = await fetch('/data/sankey-data.json');
+  if (!resp.ok) throw new Error(`Failed to load sankey data: ${resp.status} ${resp.statusText}`);
   cachedData = await resp.json();
   return cachedData!;
 }
 
 export function getAvailableDimensions(usedDimensions: Dimension[]): Dimension[] {
   return ALL_DIMENSIONS.filter(d => !usedDimensions.includes(d));
-}
-
-export interface FilteredSankey {
-  nodes: SankeyNode[];
-  links: SankeyLink[];
 }
 
 export function filterSankeyForDrill(data: SankeyData, state: DrillState): FilteredSankey {
