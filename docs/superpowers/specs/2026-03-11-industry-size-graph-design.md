@@ -38,7 +38,7 @@ Layered approach — free/open government data as foundation, commercial APIs la
 **Revenue buckets:**
 - <$1M, $1-5M, $5-10M, $10-50M, $50-100M, $100-500M, $500M-1B, $1B+
 
-### Industries (initial set, ~12-15)
+### Industries (14 categories)
 
 Technology, Healthcare, Finance, Manufacturing, Retail, Energy, Transportation, Telecommunications, Real Estate, Education, Agriculture, Entertainment, Construction, Professional Services
 
@@ -51,8 +51,8 @@ interface Company {
   id: string;              // unique identifier
   name: string;            // company name
   industry: string;        // normalized industry (e.g., "Technology")
-  employeeCount: number;   // raw count
-  employeeBucket: string;  // e.g., "100-249"
+  employeeCount: number | null; // raw count, null if unknown
+  employeeBucket: string | null; // e.g., "100-249", null if unknown
   revenue: number | null;  // USD, null if unknown
   revenueBucket: string | null; // e.g., "$10-50M"
   country: string;         // ISO country code
@@ -82,7 +82,11 @@ interface SankeyLink {
 }
 ```
 
-Pre-computed aggregates for each dimension pair (industry->size, industry->revenue, size->revenue) and three-level chains (industry->size->revenue). Frontend filters these by current selection rather than computing on the fly.
+Pre-computed aggregates for all dimension pair orderings and all three-level chain orderings. Since any dimension can be the starting point, the export generates:
+- **6 pair flows:** industry->size, industry->revenue, size->industry, size->revenue, revenue->industry, revenue->size
+- **6 three-level chains:** all permutations of (industry, size, revenue)
+
+Frontend filters these by current selection and drill-down path rather than computing on the fly. Companies missing both employee count and revenue are dropped during normalization. Companies missing only one field are included but excluded from aggregates involving that field.
 
 ## UI Design
 
@@ -98,7 +102,7 @@ Pre-computed aggregates for each dimension pair (industry->size, industry->reven
 2. **View initial Sankey** — Shows flow from the selected dimension to the next dimension (e.g., Industry -> Size)
 3. **Click a node** — Click "Technology" on the left to filter: Sankey now shows how Tech companies distribute across size buckets
 4. **Drill deeper** — Click "250-499" on the right: third level appears showing revenue breakdown for mid-size tech companies
-5. **Breadcrumb navigation** — Breadcrumb trail at the top shows the drill-down path (e.g., "Industry > Technology > 250-499"), click any breadcrumb to jump back
+5. **Breadcrumb navigation** — Breadcrumb trail at the top shows the drill-down path (e.g., "Industry > Technology > 250-499"), click any breadcrumb to restore the Sankey to that drill-down level (e.g., clicking "Technology" restores the two-column Industry->Size view filtered to Technology)
 
 ### Sidebar Behavior
 
