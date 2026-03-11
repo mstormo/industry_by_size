@@ -98,7 +98,7 @@ def parse_census_response(
     header = rows[0]
     naics_idx = header.index("NAICS2022")
     size_idx = header.index(size_field)
-    firms_idx = header.index("FIRMPDEMP")
+    firms_idx = header.index("FIRM")
     emp_idx = header.index("EMP")
 
     records = []
@@ -134,10 +134,8 @@ def parse_census_response(
 def fetch_industry_by_employment() -> list[CensusRecord]:
     """Fetch Industry x Employment Size cross-tabulation."""
     rows = _fetch_with_retry(API_BASE, {
-        "get": "FIRMPDEMP,EMP,RCPTOT",
+        "get": "FIRM,EMP,RCPTOT,NAICS2022,EMPSZFF",
         "for": "us:*",
-        "NAICS2022": "*",
-        "EMPSZFF": "*",
     })
     return parse_census_response(rows, "employeeSize", "EMPSZFF", EMPSIZE_LABELS)
 
@@ -145,9 +143,7 @@ def fetch_industry_by_employment() -> list[CensusRecord]:
 def fetch_industry_by_revenue() -> list[CensusRecord]:
     """Fetch Industry x Revenue Size cross-tabulation."""
     rows = _fetch_with_retry(API_BASE, {
-        "get": "FIRMPDEMP,EMP,RCPTOT",
+        "get": "FIRM,EMP,RCPTOT,NAICS2022,RCPSZFF",
         "for": "us:*",
-        "NAICS2022": "*",
-        "RCPSZFF": "*",
     })
     return parse_census_response(rows, "revenueSize", "RCPSZFF", RCPSIZE_LABELS)

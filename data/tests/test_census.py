@@ -12,14 +12,14 @@ from data.sources.census import (
 
 # Simulated Census API response (header row + data rows)
 MOCK_EMP_RESPONSE = [
-    ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRMPDEMP", "EMP", "RCPTOT"],
+    ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRM", "EMP", "RCPTOT"],
     ["31-33", "Manufacturing", "510", "Less than 5", "45000", "120000", "15000000"],
     ["31-33", "Manufacturing", "515", "5 to 9", "22000", "150000", "20000000"],
     ["51", "Information", "510", "Less than 5", "30000", "80000", "10000000"],
 ]
 
 MOCK_RCV_RESPONSE = [
-    ["NAICS2022", "NAICS2022_LABEL", "RCPSZFF", "RCPSZFF_LABEL", "FIRMPDEMP", "EMP", "RCPTOT"],
+    ["NAICS2022", "NAICS2022_LABEL", "RCPSZFF", "RCPSZFF_LABEL", "FIRM", "EMP", "RCPTOT"],
     ["31-33", "Manufacturing", "410", "Less than $100,000", "12000", "30000", "800000"],
     ["51", "Information", "430", "$1,000,000 to $2,499,999", "8000", "60000", "12000000"],
 ]
@@ -47,7 +47,7 @@ def test_parse_census_response_revenue():
 def test_parse_census_response_suppressed_values():
     """Census returns 'D' for suppressed cells — should be treated as 0."""
     response = [
-        ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRMPDEMP", "EMP", "RCPTOT"],
+        ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRM", "EMP", "RCPTOT"],
         ["55", "Management of companies", "550", "500 or more", "D", "D", "D"],
     ]
     records = parse_census_response(response, "employeeSize", "EMPSZFF", EMPSIZE_LABELS)
@@ -59,7 +59,7 @@ def test_parse_census_response_suppressed_values():
 def test_parse_census_response_skips_totals():
     """Rows with size code 001, 200, or 600 are totals/subtotals and should be skipped."""
     response = [
-        ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRMPDEMP", "EMP", "RCPTOT"],
+        ["NAICS2022", "NAICS2022_LABEL", "EMPSZFF", "EMPSZFF_LABEL", "FIRM", "EMP", "RCPTOT"],
         ["31-33", "Manufacturing", "001", "All firms", "100000", "5000000", "900000000"],
         ["31-33", "Manufacturing", "510", "Less than 5", "45000", "120000", "15000000"],
     ]
