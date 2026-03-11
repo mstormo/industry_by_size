@@ -1,99 +1,93 @@
 import json
-from data.models import Company, SankeyData
-from data.export import generate_sankey_data, export_to_files
+from data.models import CensusRecord, SankeyData
+from data.export import generate_sankey_from_census, export_census_to_file
 
-SAMPLE_COMPANIES = [
-    Company(id="1", name="TechCo", industry="Technology",
-            employeeCount=150, employeeBucket="100-249",
-            revenue=50_000_000, revenueBucket="$10-50M",
-            country="US", source="test"),
-    Company(id="2", name="TechSmall", industry="Technology",
-            employeeCount=8, employeeBucket="5-9",
-            revenue=2_000_000, revenueBucket="$1-5M",
-            country="US", source="test"),
-    Company(id="3", name="HealthBig", industry="Healthcare",
-            employeeCount=5000, employeeBucket="1K-4.9K",
-            revenue=500_000_000, revenueBucket="$100-500M",
-            country="US", source="test"),
-    Company(id="4", name="NoRevenue", industry="Technology",
-            employeeCount=20, employeeBucket="20-49",
-            revenue=None, revenueBucket=None,
-            country="US", source="test"),
+
+SAMPLE_RECORDS = [
+    CensusRecord(
+        source_dimension="industry", source_value="Manufacturing",
+        target_dimension="employeeSize", target_value="100-249",
+        firms=13573, employees=943335,
+    ),
+    CensusRecord(
+        source_dimension="industry", source_value="Manufacturing",
+        target_dimension="employeeSize", target_value="500+",
+        firms=3200, employees=2100000,
+    ),
+    CensusRecord(
+        source_dimension="industry", source_value="Information",
+        target_dimension="employeeSize", target_value="100-249",
+        firms=8500, employees=590000,
+    ),
+    CensusRecord(
+        source_dimension="industry", source_value="Manufacturing",
+        target_dimension="revenueSize", target_value="$1-2.5M",
+        firms=18000, employees=250000,
+    ),
+    CensusRecord(
+        source_dimension="industry", source_value="Information",
+        target_dimension="revenueSize", target_value="$100M+",
+        firms=500, employees=800000,
+    ),
 ]
 
 
-def test_generate_sankey_data_has_all_dimensions():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
-    assert set(data.dimensions) == {"industry", "employeeBucket", "revenueBucket"}
+def test_generate_sankey_has_correct_dimensions():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
+    assert data.dimensions == ["industry", "employeeSize", "revenueSize"]
 
 
-def test_generate_sankey_data_nodes_include_industries():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
+def test_generate_sankey_nodes_created():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
     node_ids = {n.id for n in data.nodes}
-    assert "industry:Technology" in node_ids
-    assert "industry:Healthcare" in node_ids
+    assert "industry:Manufacturing" in node_ids
+    assert "industry:Information" in node_ids
+    assert "employeeSize:100-249" in node_ids
+    assert "employeeSize:500+" in node_ids
+    assert "revenueSize:$1-2.5M" in node_ids
+    assert "revenueSize:$100M+" in node_ids
 
 
-def test_generate_sankey_data_nodes_include_buckets():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
-    node_ids = {n.id for n in data.nodes}
-    assert "employeeBucket:100-249" in node_ids
-    assert "revenueBucket:$10-50M" in node_ids
+def test_generate_sankey_nodes_have_correct_dimension():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
+    for node in data.nodes:
+        dim = node.id.split(":")[0]
+        assert node.dimension == dim
 
 
-def test_generate_sankey_data_links_count():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
-    # Find link from Technology -> 100-249 employees
+def test_generate_sankey_links_have_firms_and_employees():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
     link = next(
-        (l for l in data.links
-         if l.source == "industry:Technology" and l.target == "employeeBucket:100-249"),
-        None,
+        l for l in data.links
+        if l.source == "industry:Manufacturing" and l.target == "employeeSize:100-249"
     )
-    assert link is not None
-    assert link.value == 1
+    assert link.firms == 13573
+    assert link.employees == 943335
 
 
-def test_generate_sankey_data_all_six_dimension_pairs():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
-    links_by_pair = {}
-    for link in data.links:
-        src_dim = link.source.split(":")[0]
-        tgt_dim = link.target.split(":")[0]
-        pair = (src_dim, tgt_dim)
-        links_by_pair.setdefault(pair, []).append(link)
-
-    expected_pairs = [
-        ("industry", "employeeBucket"),
-        ("industry", "revenueBucket"),
-        ("employeeBucket", "industry"),
-        ("employeeBucket", "revenueBucket"),
-        ("revenueBucket", "industry"),
-        ("revenueBucket", "employeeBucket"),
-    ]
-    for pair in expected_pairs:
-        assert pair in links_by_pair, f"Missing dimension pair: {pair[0]} -> {pair[1]}"
-        assert len(links_by_pair[pair]) > 0, f"No links for pair: {pair[0]} -> {pair[1]}"
+def test_generate_sankey_available_pairs():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
+    assert ("industry", "employeeSize") in data.availablePairs
+    assert ("industry", "revenueSize") in data.availablePairs
+    assert len(data.availablePairs) == 2
 
 
-def test_generate_sankey_data_excludes_null_from_relevant_links():
-    data = generate_sankey_data(SAMPLE_COMPANIES)
-    # NoRevenue company (id=4) should not appear in revenue links
-    revenue_links = [l for l in data.links if "revenueBucket:" in l.target or "revenueBucket:" in l.source]
-    total_revenue_companies = sum(l.value for l in revenue_links if l.source.startswith("industry:"))
-    # Only 3 companies have revenue (not NoRevenue)
-    assert total_revenue_companies == 3
+def test_generate_sankey_link_count():
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
+    assert len(data.links) == 5  # one link per record
 
 
-def test_export_to_files(tmp_path):
-    export_to_files(SAMPLE_COMPANIES, str(tmp_path))
-    companies_path = tmp_path / "companies.json"
-    sankey_path = tmp_path / "sankey-data.json"
-    assert companies_path.exists()
-    assert sankey_path.exists()
+def test_export_census_to_file(tmp_path):
+    data = generate_sankey_from_census(SAMPLE_RECORDS)
+    output = tmp_path / "sankey-data.json"
+    export_census_to_file(data, str(output))
+    assert output.exists()
 
-    companies = json.loads(companies_path.read_text())
-    assert len(companies) == 4
-
-    sankey = json.loads(sankey_path.read_text())
-    assert "nodes" in sankey
-    assert "links" in sankey
+    loaded = json.loads(output.read_text())
+    assert "availablePairs" in loaded
+    assert "nodes" in loaded
+    assert "links" in loaded
+    # Verify links have firms/employees, not value
+    assert "firms" in loaded["links"][0]
+    assert "employees" in loaded["links"][0]
+    assert "value" not in loaded["links"][0]
