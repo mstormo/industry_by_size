@@ -66,7 +66,7 @@ export function renderSankey(
     }));
 
   const sankeyLayout = sankey<D3SankeyNode, any>()
-    .nodeId((_d: any, i: number) => i)
+    .nodeId(((_d: any, i: number) => i) as any)
     .nodeWidth(20)
     .nodePadding(12)
     .extent([[1, 1], [width - 1, height - 6]]);
@@ -74,7 +74,7 @@ export function renderSankey(
   const graph = sankeyLayout({
     nodes: graphNodes,
     links: graphLinks,
-  } as any) as SankeyGraph<D3SankeyNode, D3SankeyLink>;
+  } as any) as unknown as SankeyGraph<D3SankeyNode, D3SankeyLink>;
 
   function getNodeColor(node: D3SankeyNode): string {
     const colors = DIMENSION_COLORS[node.dimension] || DIMENSION_COLORS.industry;
