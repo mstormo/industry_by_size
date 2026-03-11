@@ -1,14 +1,6 @@
-export interface Company {
-  id: string;
-  name: string;
-  industry: string;
-  employeeCount: number | null;
-  employeeBucket: string | null;
-  revenue: number | null;
-  revenueBucket: string | null;
-  country: string;
-  source: string;
-}
+export type Dimension = 'industry' | 'employeeSize' | 'revenueSize';
+
+export type Metric = 'firms' | 'employees';
 
 export interface SankeyNode {
   id: string;
@@ -19,25 +11,24 @@ export interface SankeyNode {
 export interface SankeyLink {
   source: string;
   target: string;
-  value: number;
+  firms: number;
+  employees: number;
 }
 
 export interface SankeyData {
-  dimensions: string[];
+  dimensions: Dimension[];
   nodes: SankeyNode[];
   links: SankeyLink[];
+  availablePairs: [Dimension, Dimension][];
 }
-
-export type Dimension = 'industry' | 'employeeBucket' | 'revenueBucket';
 
 export interface FilteredSankey {
   nodes: SankeyNode[];
   links: SankeyLink[];
+  unavailablePair?: boolean;
 }
 
 export interface DrillState {
-  /** The ordered sequence of dimensions as the user drills down */
   path: Dimension[];
-  /** The selected values at each level (e.g., ["Technology", "100-249"]) */
   selections: string[];
 }
