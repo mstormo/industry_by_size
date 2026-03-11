@@ -50,10 +50,9 @@ export function updateSidebar(data: FilteredSankey, hoveredNode: SankeyNode | nu
       'border-left: 3px solid var(--accent);'
     ));
 
-    const isSource = connectedLinks.some(l => l.source === hoveredNode.id);
     const breakdown = connectedLinks
       .map(l => {
-        const otherId = isSource ? l.target : l.source;
+        const otherId = l.source === hoveredNode.id ? l.target : l.source;
         const otherNode = data.nodes.find(n => n.id === otherId);
         return { label: otherNode?.label || otherId, value: l.value };
       })

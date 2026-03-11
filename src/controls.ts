@@ -8,7 +8,6 @@ const DIMENSION_LABELS: Record<Dimension, string> = {
 
 interface ControlsCallbacks {
   onDimensionChange: (dimension: Dimension) => void;
-  onBreadcrumbClick: (level: number) => void;
 }
 
 export function initControls(callbacks: ControlsCallbacks): void {

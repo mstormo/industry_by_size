@@ -80,10 +80,13 @@ async function init(): Promise<void> {
 
   initControls({
     onDimensionChange: handleDimensionChange,
-    onBreadcrumbClick: handleBreadcrumbClick,
   });
 
-  window.addEventListener('resize', () => refresh());
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(refresh, 150);
+  });
 
   refresh();
 }
