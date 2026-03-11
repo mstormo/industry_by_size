@@ -1,24 +1,34 @@
-import type { Dimension, DrillState } from './types';
+import type { Dimension, Metric, DrillState } from './types';
 
 const DIMENSION_LABELS: Record<Dimension, string> = {
   industry: 'Industry',
-  employeeBucket: 'Company Size',
-  revenueBucket: 'Revenue',
+  employeeSize: 'Company Size',
+  revenueSize: 'Revenue',
 };
 
 interface ControlsCallbacks {
   onDimensionChange: (dimension: Dimension) => void;
+  onMetricChange: (metric: Metric) => void;
 }
 
 export function initControls(callbacks: ControlsCallbacks): void {
   const tabs = document.querySelectorAll<HTMLButtonElement>('#dimension-tabs .tab');
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const dim = tab.dataset.dimension as Dimension;
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       callbacks.onDimensionChange(dim);
+    });
+  });
+
+  const metricBtns = document.querySelectorAll<HTMLButtonElement>('#metric-toggle .metric-btn');
+  metricBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const metric = btn.dataset.metric as Metric;
+      metricBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      callbacks.onMetricChange(metric);
     });
   });
 }

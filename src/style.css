@@ -69,6 +69,35 @@ body {
   color: white;
 }
 
+/* Metric toggle */
+#metric-toggle {
+  display: flex;
+  gap: 4px;
+  margin-left: 16px;
+}
+
+.metric-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.metric-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.metric-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
 /* Breadcrumb */
 #breadcrumb {
   padding: 8px 24px;
