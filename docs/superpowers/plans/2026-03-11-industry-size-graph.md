@@ -1448,7 +1448,7 @@ if __name__ == "__main__":
     run_pipeline(args.output, args.max_edgar, args.max_wikidata, args.max_oc_pages)
 ```
 
-- [ ] **Step 2: Run all Python tests to ensure nothing is broken**
+- [ ] **Step 4: Run all Python tests to ensure nothing is broken**
 
 ```bash
 cd data && source .venv/bin/activate && python -m pytest -v
@@ -1456,7 +1456,7 @@ cd data && source .venv/bin/activate && python -m pytest -v
 
 Expected: All tests pass
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add data/pipeline.py data/tests/test_pipeline.py
