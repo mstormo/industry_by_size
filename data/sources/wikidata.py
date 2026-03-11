@@ -6,11 +6,11 @@ WIKIDATA_SPARQL_URL = "https://query.wikidata.org/sparql"
 
 SPARQL_QUERY = """
 SELECT ?company ?companyLabel ?industryLabel ?employees ?revenue ?countryLabel WHERE {
-  ?company wdt:P31 wd:Q4830453.
-  ?company wdt:P452 ?industry.
-  ?company wdt:P17 ?country.
-  OPTIONAL { ?company wdt:P1128 ?employees. }
-  OPTIONAL { ?company wdt:P2139 ?revenue. }
+  ?company wdt:P31 wd:Q4830453.       # instance of business enterprise
+  ?company wdt:P452 ?industry.         # industry
+  ?company wdt:P17 ?country.           # country
+  OPTIONAL { ?company wdt:P1128 ?employees. }  # employees
+  OPTIONAL { ?company wdt:P2139 ?revenue. }    # revenue
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 LIMIT %d

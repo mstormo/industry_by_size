@@ -1,4 +1,11 @@
-"""Fetch company data from SEC EDGAR XBRL company facts API."""
+"""Fetch company data from SEC EDGAR XBRL company facts API.
+
+SEC EDGAR provides free access to company filings. The companyfacts endpoint
+returns structured XBRL data including revenue and employee counts from 10-K filings.
+
+API docs: https://www.sec.gov/edgar/sec-api-documentation
+Rate limit: 10 requests/second, requires User-Agent header.
+"""
 import time
 import requests
 from data.models import Company
@@ -36,12 +43,26 @@ def _sic_to_industry(sic: str) -> str:
     return SIC_TO_INDUSTRY.get(prefix, "Other")
 
 
-def _extract_latest_10k_value(facts: dict, namespace: str, field: str) -> float | None:
+def _extract_latest_10k_value(facts: dict, namespace: str, field: str, prefer_unit: str | None = None) -> float | None:
+    """Extract the most recent 10-K value for a given XBRL field.
+
+    If prefer_unit is specified (e.g., "USD"), try that unit type first to avoid
+    returning values from an unrelated unit (e.g., shares instead of dollars).
+    """
     ns_data = facts.get(namespace, {})
     field_data = ns_data.get(field, {})
     units = field_data.get("units", {})
-    for unit_type in units.values():
-        ten_k_values = [e for e in unit_type if e.get("form") == "10-K"]
+
+    # Try preferred unit first, then fall back to any unit
+    unit_order = []
+    if prefer_unit and prefer_unit in units:
+        unit_order.append(units[prefer_unit])
+    for key, val in units.items():
+        if key != prefer_unit:
+            unit_order.append(val)
+
+    for entries in unit_order:
+        ten_k_values = [e for e in entries if e.get("form") == "10-K"]
         if ten_k_values:
             latest = max(ten_k_values, key=lambda e: e.get("fy", 0))
             return latest["val"]
@@ -56,14 +77,14 @@ def parse_edgar_company(filing: dict) -> Company | None:
     industry = _sic_to_industry(sic) if sic else "Other"
 
     revenue = (
-        _extract_latest_10k_value(facts, "us-gaap", "Revenues")
-        or _extract_latest_10k_value(facts, "us-gaap", "RevenueFromContractWithCustomerExcludingAssessedTax")
-        or _extract_latest_10k_value(facts, "us-gaap", "SalesRevenueNet")
+        _extract_latest_10k_value(facts, "us-gaap", "Revenues", prefer_unit="USD")
+        or _extract_latest_10k_value(facts, "us-gaap", "RevenueFromContractWithCustomerExcludingAssessedTax", prefer_unit="USD")
+        or _extract_latest_10k_value(facts, "us-gaap", "SalesRevenueNet", prefer_unit="USD")
     )
 
-    employee_count_raw = _extract_latest_10k_value(facts, "dei", "EntityNumberOfEmployees")
+    employee_count_raw = _extract_latest_10k_value(facts, "dei", "EntityNumberOfEmployees", prefer_unit="pure")
     if employee_count_raw is None:
-        employee_count_raw = _extract_latest_10k_value(facts, "us-gaap", "EntityNumberOfEmployees")
+        employee_count_raw = _extract_latest_10k_value(facts, "us-gaap", "EntityNumberOfEmployees", prefer_unit="pure")
     employee_count = int(employee_count_raw) if employee_count_raw is not None else None
 
     return Company(
