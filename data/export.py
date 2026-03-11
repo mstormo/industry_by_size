@@ -5,29 +5,21 @@ from itertools import permutations
 
 from data.models import Company, SankeyData, SankeyNode, SankeyLink
 
-DIMENSION_FIELDS = {
-    "industry": "industry",
-    "employeeBucket": "employeeBucket",
-    "revenueBucket": "revenueBucket",
-}
-
-
-def _get_value(company: Company, dimension: str) -> str | None:
-    return getattr(company, DIMENSION_FIELDS[dimension])
+EXPORT_DIMENSIONS = ["industry", "employeeBucket", "revenueBucket"]
 
 
 def generate_sankey_data(companies: list[Company]) -> SankeyData:
     nodes_set: set[tuple[str, str, str]] = set()  # (id, label, dimension)
     link_counts: defaultdict[tuple[str, str], int] = defaultdict(int)
 
-    dims = list(DIMENSION_FIELDS.keys())
+    dims = EXPORT_DIMENSIONS
 
     # Generate links for all pairs and triples
     for perm in permutations(dims, 2):
         source_dim, target_dim = perm
         for c in companies:
-            source_val = _get_value(c, source_dim)
-            target_val = _get_value(c, target_dim)
+            source_val: str | None = getattr(c, source_dim)
+            target_val: str | None = getattr(c, target_dim)
             if source_val is None or target_val is None:
                 continue
             source_id = f"{source_dim}:{source_val}"

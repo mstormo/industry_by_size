@@ -16,7 +16,7 @@ SAMPLE_COMPANIES = [
             revenue=500_000_000, revenueBucket="$100-500M",
             country="US", source="test"),
     Company(id="4", name="NoRevenue", industry="Technology",
-            employeeCount=20, employeeBucket="10-19",
+            employeeCount=20, employeeBucket="20-49",
             revenue=None, revenueBucket=None,
             country="US", source="test"),
 ]
