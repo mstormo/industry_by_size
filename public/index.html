@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Industry Size Graph</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <h1>Industry Size Graph</h1>
+      <nav id="dimension-tabs">
+        <button class="tab active" data-dimension="industry">Industry</button>
+        <button class="tab" data-dimension="employeeBucket">Company Size</button>
+        <button class="tab" data-dimension="revenueBucket">Revenue</button>
+      </nav>
+    </header>
+    <div id="breadcrumb"></div>
+    <main id="content">
+      <div id="sankey-container">
+        <svg id="sankey-svg"></svg>
+      </div>
+      <aside id="sidebar">
+        <h2>Details</h2>
+        <div id="sidebar-content">
+          <p class="placeholder">Select a node to see details</p>
+        </div>
+      </aside>
+    </main>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
