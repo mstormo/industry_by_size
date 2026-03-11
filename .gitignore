@@ -1,3 +1,7 @@
 .superpowers/
 data/raw/
+data/.venv/
 node_modules/
+dist/
+public/data/companies.json
+public/data/sankey-data.json
