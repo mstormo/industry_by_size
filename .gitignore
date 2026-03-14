@@ -6,6 +6,4 @@ data/.venv/
 node_modules/
 dist/
 public/data/companies.json
-public/data/sankey-*.json
-public/data/regions.json
 __pycache__/

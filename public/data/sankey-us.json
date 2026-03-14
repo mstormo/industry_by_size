@@ -1,0 +1,2524 @@
+{
+  "dimensions": [
+    "employeeSize",
+    "industry",
+    "revenueSize"
+  ],
+  "nodes": [
+    {
+      "id": "employeeSize:1,000-2,499",
+      "label": "1,000-2,499",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:10-24",
+      "label": "10-24",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:100-249",
+      "label": "100-249",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:2,500-4,999",
+      "label": "2,500-4,999",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:25-49",
+      "label": "25-49",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:250-499",
+      "label": "250-499",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:5,000+",
+      "label": "5,000+",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:5-9",
+      "label": "5-9",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:50-99",
+      "label": "50-99",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:500-999",
+      "label": "500-999",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:<5",
+      "label": "<5",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "industry:Accommodation and food services",
+      "label": "Accommodation and food services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Administrative and support and waste management",
+      "label": "Administrative and support and waste management",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Agriculture, forestry, fishing and hunting",
+      "label": "Agriculture, forestry, fishing and hunting",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Arts, entertainment, and recreation",
+      "label": "Arts, entertainment, and recreation",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Construction",
+      "label": "Construction",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Educational services",
+      "label": "Educational services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Finance and insurance",
+      "label": "Finance and insurance",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Health care and social assistance",
+      "label": "Health care and social assistance",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Information",
+      "label": "Information",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Management of companies and enterprises",
+      "label": "Management of companies and enterprises",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Manufacturing",
+      "label": "Manufacturing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Mining, quarrying, and oil and gas extraction",
+      "label": "Mining, quarrying, and oil and gas extraction",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Other services (except public administration)",
+      "label": "Other services (except public administration)",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Professional, scientific, and technical services",
+      "label": "Professional, scientific, and technical services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Real estate and rental and leasing",
+      "label": "Real estate and rental and leasing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Retail trade",
+      "label": "Retail trade",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Transportation and warehousing",
+      "label": "Transportation and warehousing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Unclassified",
+      "label": "Unclassified",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Utilities",
+      "label": "Utilities",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Wholesale trade",
+      "label": "Wholesale trade",
+      "dimension": "industry"
+    },
+    {
+      "id": "revenueSize:$1-2.5M",
+      "label": "$1-2.5M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$10-25M",
+      "label": "$10-25M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$100-250K",
+      "label": "$100-250K",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$100M+",
+      "label": "$100M+",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$2.5-5M",
+      "label": "$2.5-5M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$25-100M",
+      "label": "$25-100M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$250-500K",
+      "label": "$250-500K",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$5-10M",
+      "label": "$5-10M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:$500K-1M",
+      "label": "$500K-1M",
+      "dimension": "revenueSize"
+    },
+    {
+      "id": "revenueSize:<$100K",
+      "label": "<$100K",
+      "dimension": "revenueSize"
+    }
+  ],
+  "links": [
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:<5",
+      "firms": 15879,
+      "employees": 22902
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:5-9",
+      "firms": 3539,
+      "employees": 23136
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:10-24",
+      "firms": 2014,
+      "employees": 28794
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:25-49",
+      "firms": 595,
+      "employees": 19601
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:50-99",
+      "firms": 263,
+      "employees": 16558
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:100-249",
+      "firms": 166,
+      "employees": 19745
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:250-499",
+      "firms": 42,
+      "employees": 9498
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:500-999",
+      "firms": 36,
+      "employees": 8575
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 24,
+      "employees": 8929
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 13,
+      "employees": 4118
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:5,000+",
+      "firms": 28,
+      "employees": 6778
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:<5",
+      "firms": 9788,
+      "employees": 15255
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:5-9",
+      "firms": 2417,
+      "employees": 15909
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:10-24",
+      "firms": 2408,
+      "employees": 36073
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:25-49",
+      "firms": 1103,
+      "employees": 36641
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:50-99",
+      "firms": 646,
+      "employees": 39882
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:100-249",
+      "firms": 507,
+      "employees": 63136
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:250-499",
+      "firms": 134,
+      "employees": 33713
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:500-999",
+      "firms": 125,
+      "employees": 47699
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 90,
+      "employees": 60361
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 56,
+      "employees": 45975
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:5,000+",
+      "firms": 67,
+      "employees": 113379
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:<5",
+      "firms": 3651,
+      "employees": 6417
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:5-9",
+      "firms": 1080,
+      "employees": 6963
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:10-24",
+      "firms": 706,
+      "employees": 10495
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:25-49",
+      "firms": 416,
+      "employees": 14382
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:50-99",
+      "firms": 370,
+      "employees": 24990
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:100-249",
+      "firms": 292,
+      "employees": 41786
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:250-499",
+      "firms": 51,
+      "employees": 16562
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:500-999",
+      "firms": 62,
+      "employees": 27908
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 55,
+      "employees": 41311
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 30,
+      "employees": 49057
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:5,000+",
+      "firms": 59,
+      "employees": 405343
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:<5",
+      "firms": 524170,
+      "employees": 822576
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:5-9",
+      "firms": 124087,
+      "employees": 810782
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:10-24",
+      "firms": 85061,
+      "employees": 1260147
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:25-49",
+      "firms": 28212,
+      "employees": 957402
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:50-99",
+      "firms": 12403,
+      "employees": 834047
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:100-249",
+      "firms": 6356,
+      "employees": 957023
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:250-499",
+      "firms": 903,
+      "employees": 300616
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:500-999",
+      "firms": 622,
+      "employees": 326759
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 362,
+      "employees": 338702
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 134,
+      "employees": 206876
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:5,000+",
+      "firms": 177,
+      "employees": 546917
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:<5",
+      "firms": 97530,
+      "employees": 177386
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:5-9",
+      "firms": 44117,
+      "employees": 294151
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:10-24",
+      "firms": 45453,
+      "employees": 691781
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:25-49",
+      "firms": 22272,
+      "employees": 752620
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:50-99",
+      "firms": 13324,
+      "employees": 883941
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:100-249",
+      "firms": 10185,
+      "employees": 1502404
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:250-499",
+      "firms": 2207,
+      "employees": 682387
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:500-999",
+      "firms": 1815,
+      "employees": 938860
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 1216,
+      "employees": 1218217
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 510,
+      "employees": 1020706
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:5,000+",
+      "firms": 636,
+      "employees": 4025877
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:<5",
+      "firms": 161461,
+      "employees": 267702
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:5-9",
+      "firms": 44539,
+      "employees": 293240
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:10-24",
+      "firms": 37398,
+      "employees": 554908
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:25-49",
+      "firms": 15299,
+      "employees": 500275
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:50-99",
+      "firms": 8245,
+      "employees": 505733
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:100-249",
+      "firms": 6202,
+      "employees": 760441
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:250-499",
+      "firms": 1485,
+      "employees": 331294
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:500-999",
+      "firms": 1240,
+      "employees": 386108
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 946,
+      "employees": 452304
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 449,
+      "employees": 350699
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "employeeSize:5,000+",
+      "firms": 668,
+      "employees": 1740526
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:<5",
+      "firms": 386900,
+      "employees": 703142
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:5-9",
+      "firms": 129145,
+      "employees": 847757
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:10-24",
+      "firms": 82658,
+      "employees": 1198731
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:25-49",
+      "firms": 24733,
+      "employees": 815597
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:50-99",
+      "firms": 12013,
+      "employees": 763829
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:100-249",
+      "firms": 6576,
+      "employees": 845942
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:250-499",
+      "firms": 1090,
+      "employees": 277299
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:500-999",
+      "firms": 908,
+      "employees": 356376
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 602,
+      "employees": 491584
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 249,
+      "employees": 371302
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "employeeSize:5,000+",
+      "firms": 530,
+      "employees": 9250879
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:<5",
+      "firms": 168095,
+      "employees": 225522
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:5-9",
+      "firms": 25512,
+      "employees": 167318
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:10-24",
+      "firms": 21908,
+      "employees": 329458
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:25-49",
+      "firms": 9415,
+      "employees": 310330
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:50-99",
+      "firms": 5757,
+      "employees": 372968
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:100-249",
+      "firms": 3706,
+      "employees": 456525
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:250-499",
+      "firms": 770,
+      "employees": 165708
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:500-999",
+      "firms": 764,
+      "employees": 222253
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 608,
+      "employees": 278264
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 325,
+      "employees": 261687
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:5,000+",
+      "firms": 667,
+      "employees": 3318088
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:<5",
+      "firms": 59695,
+      "employees": 82556
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:5-9",
+      "firms": 11219,
+      "employees": 73800
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:10-24",
+      "firms": 8945,
+      "employees": 132585
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:25-49",
+      "firms": 3645,
+      "employees": 121785
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:50-99",
+      "firms": 2095,
+      "employees": 136910
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:100-249",
+      "firms": 1886,
+      "employees": 275951
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:250-499",
+      "firms": 502,
+      "employees": 149847
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:500-999",
+      "firms": 437,
+      "employees": 217730
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 355,
+      "employees": 297830
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 194,
+      "employees": 285362
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:5,000+",
+      "firms": 359,
+      "employees": 1859656
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:<5",
+      "firms": 179506,
+      "employees": 301683
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:5-9",
+      "firms": 34966,
+      "employees": 222237
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:10-24",
+      "firms": 15454,
+      "employees": 222238
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:25-49",
+      "firms": 5502,
+      "employees": 183911
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:50-99",
+      "firms": 3371,
+      "employees": 222014
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:100-249",
+      "firms": 3115,
+      "employees": 474602
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:250-499",
+      "firms": 796,
+      "employees": 254936
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:500-999",
+      "firms": 651,
+      "employees": 356319
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 490,
+      "employees": 552798
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 235,
+      "employees": 492193
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:5,000+",
+      "firms": 450,
+      "employees": 3548966
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:<5",
+      "firms": 305689,
+      "employees": 403485
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:5-9",
+      "firms": 31943,
+      "employees": 204891
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:10-24",
+      "firms": 17134,
+      "employees": 245761
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:25-49",
+      "firms": 5298,
+      "employees": 169266
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:50-99",
+      "firms": 2659,
+      "employees": 160390
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:100-249",
+      "firms": 2082,
+      "employees": 250691
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:250-499",
+      "firms": 517,
+      "employees": 117912
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:500-999",
+      "firms": 433,
+      "employees": 128664
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 335,
+      "employees": 135776
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 165,
+      "employees": 106258
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:5,000+",
+      "firms": 302,
+      "employees": 410031
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:<5",
+      "firms": 652709,
+      "employees": 914744
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:5-9",
+      "firms": 103960,
+      "employees": 678450
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:10-24",
+      "firms": 69812,
+      "employees": 1026007
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:25-49",
+      "firms": 22084,
+      "employees": 739935
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:50-99",
+      "firms": 10832,
+      "employees": 710784
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:100-249",
+      "firms": 7469,
+      "employees": 1073048
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:250-499",
+      "firms": 1663,
+      "employees": 479831
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:500-999",
+      "firms": 1328,
+      "employees": 582055
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 1070,
+      "employees": 759386
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 492,
+      "employees": 467068
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:5,000+",
+      "firms": 886,
+      "employees": 2720796
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:<5",
+      "firms": 3450,
+      "employees": 3992
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:5-9",
+      "firms": 742,
+      "employees": 3296
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:10-24",
+      "firms": 1493,
+      "employees": 10477
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:25-49",
+      "firms": 1989,
+      "employees": 21309
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:50-99",
+      "firms": 2704,
+      "employees": 45684
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:100-249",
+      "firms": 5359,
+      "employees": 165901
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:250-499",
+      "firms": 2303,
+      "employees": 126228
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:500-999",
+      "firms": 2500,
+      "employees": 215545
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 2264,
+      "employees": 387577
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 1077,
+      "employees": 341496
+    },
+    {
+      "source": "industry:Management of companies and enterprises",
+      "target": "employeeSize:5,000+",
+      "firms": 1532,
+      "employees": 2340472
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:<5",
+      "firms": 243585,
+      "employees": 356783
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:5-9",
+      "firms": 54965,
+      "employees": 359653
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:10-24",
+      "firms": 40914,
+      "employees": 609054
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:25-49",
+      "firms": 15636,
+      "employees": 525051
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:50-99",
+      "firms": 8280,
+      "employees": 538533
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:100-249",
+      "firms": 6835,
+      "employees": 987874
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:250-499",
+      "firms": 1775,
+      "employees": 514564
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:500-999",
+      "firms": 1614,
+      "employees": 774054
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 1242,
+      "employees": 1136425
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 520,
+      "employees": 926957
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:5,000+",
+      "firms": 826,
+      "employees": 6849761
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:<5",
+      "firms": 52200,
+      "employees": 78623
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:5-9",
+      "firms": 16264,
+      "employees": 109105
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:10-24",
+      "firms": 16928,
+      "employees": 255596
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:25-49",
+      "firms": 7908,
+      "employees": 271028
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:50-99",
+      "firms": 4781,
+      "employees": 324751
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:100-249",
+      "firms": 3246,
+      "employees": 503722
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:250-499",
+      "firms": 689,
+      "employees": 229658
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:500-999",
+      "firms": 555,
+      "employees": 318663
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 427,
+      "employees": 528860
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 106,
+      "employees": 225617
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:5,000+",
+      "firms": 183,
+      "employees": 898217
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:<5",
+      "firms": 367849,
+      "employees": 594793
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:5-9",
+      "firms": 134359,
+      "employees": 900195
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:10-24",
+      "firms": 110807,
+      "employees": 1645286
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:25-49",
+      "firms": 37776,
+      "employees": 1289201
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:50-99",
+      "firms": 20465,
+      "employees": 1399147
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:100-249",
+      "firms": 15299,
+      "employees": 2412898
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:250-499",
+      "firms": 2887,
+      "employees": 1019418
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:500-999",
+      "firms": 2074,
+      "employees": 1285750
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 1299,
+      "employees": 1755909
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 460,
+      "employees": 1441799
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:5,000+",
+      "firms": 526,
+      "employees": 7426836
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:<5",
+      "firms": 96401,
+      "employees": 117301
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:5-9",
+      "firms": 18992,
+      "employees": 125167
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:10-24",
+      "firms": 18513,
+      "employees": 277055
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:25-49",
+      "firms": 7126,
+      "employees": 239627
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:50-99",
+      "firms": 3813,
+      "employees": 250550
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:100-249",
+      "firms": 2268,
+      "employees": 332336
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:250-499",
+      "firms": 429,
+      "employees": 134380
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:500-999",
+      "firms": 343,
+      "employees": 161873
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 211,
+      "employees": 180261
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 71,
+      "employees": 80277
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:5,000+",
+      "firms": 123,
+      "employees": 419530
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:<5",
+      "firms": 214362,
+      "employees": 347090
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:5-9",
+      "firms": 114647,
+      "employees": 768127
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:10-24",
+      "firms": 149686,
+      "employees": 2300613
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:25-49",
+      "firms": 62038,
+      "employees": 2069549
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:50-99",
+      "firms": 22027,
+      "employees": 1435374
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:100-249",
+      "firms": 8238,
+      "employees": 1228167
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:250-499",
+      "firms": 1466,
+      "employees": 508569
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:500-999",
+      "firms": 1119,
+      "employees": 677508
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 688,
+      "employees": 832074
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 218,
+      "employees": 541964
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:5,000+",
+      "firms": 234,
+      "employees": 3084443
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:<5",
+      "firms": 479121,
+      "employees": 847238
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:5-9",
+      "firms": 138949,
+      "employees": 903583
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:10-24",
+      "firms": 77563,
+      "employees": 1121508
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:25-49",
+      "firms": 20406,
+      "employees": 673743
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:50-99",
+      "firms": 7590,
+      "employees": 484178
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:100-249",
+      "firms": 3607,
+      "employees": 472791
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:250-499",
+      "firms": 600,
+      "employees": 146268
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:500-999",
+      "firms": 499,
+      "employees": 168624
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:1,000-2,499",
+      "firms": 383,
+      "employees": 208501
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:2,500-4,999",
+      "firms": 169,
+      "employees": 101920
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:5,000+",
+      "firms": 349,
+      "employees": 343633
+    },
+    {
+      "source": "industry:Unclassified",
+      "target": "employeeSize:<5",
+      "firms": 7928,
+      "employees": 6425
+    },
+    {
+      "source": "industry:Unclassified",
+      "target": "employeeSize:5-9",
+      "firms": 404,
+      "employees": 2540
+    },
+    {
+      "source": "industry:Unclassified",
+      "target": "employeeSize:10-24",
+      "firms": 138,
+      "employees": 1899
+    },
+    {
+      "source": "industry:Unclassified",
+      "target": "employeeSize:25-49",
+      "firms": 28,
+      "employees": 988
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:<$100K",
+      "firms": 2164,
+      "employees": 3031
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$100-250K",
+      "firms": 2598,
+      "employees": 3468
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$250-500K",
+      "firms": 1912,
+      "employees": 4309
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$500K-1M",
+      "firms": 1760,
+      "employees": 6851
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 2400,
+      "employees": 17787
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 1555,
+      "employees": 22214
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$5-10M",
+      "firms": 1240,
+      "employees": 31767
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$10-25M",
+      "firms": 1033,
+      "employees": 51435
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$25-100M",
+      "firms": 686,
+      "employees": 78083
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "revenueSize:$100M+",
+      "firms": 399,
+      "employees": 323598
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:<$100K",
+      "firms": 699,
+      "employees": 1594
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$100-250K",
+      "firms": 873,
+      "employees": 1824
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$250-500K",
+      "firms": 910,
+      "employees": 2597
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$500K-1M",
+      "firms": 915,
+      "employees": 3935
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 943,
+      "employees": 6986
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 443,
+      "employees": 5487
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$5-10M",
+      "firms": 342,
+      "employees": 7101
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$10-25M",
+      "firms": 401,
+      "employees": 12272
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$25-100M",
+      "firms": 564,
+      "employees": 40173
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "revenueSize:$100M+",
+      "firms": 439,
+      "employees": 615678
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:<$100K",
+      "firms": 62202,
+      "employees": 65139
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$100-250K",
+      "firms": 115745,
+      "employees": 148807
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$250-500K",
+      "firms": 95429,
+      "employees": 234998
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$500K-1M",
+      "firms": 90905,
+      "employees": 405534
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 114360,
+      "employees": 847486
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 58531,
+      "employees": 760185
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$5-10M",
+      "firms": 35785,
+      "employees": 781544
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$10-25M",
+      "firms": 24218,
+      "employees": 995062
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$25-100M",
+      "firms": 12024,
+      "employees": 1170244
+    },
+    {
+      "source": "industry:Construction",
+      "target": "revenueSize:$100M+",
+      "firms": 2870,
+      "employees": 1779947
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:<$100K",
+      "firms": 27579,
+      "employees": 31552
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$100-250K",
+      "firms": 29881,
+      "employees": 51384
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$250-500K",
+      "firms": 27495,
+      "employees": 89653
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$500K-1M",
+      "firms": 31910,
+      "employees": 182689
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 41959,
+      "employees": 428744
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 25380,
+      "employees": 471539
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$5-10M",
+      "firms": 19546,
+      "employees": 614533
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$10-25M",
+      "firms": 16896,
+      "employees": 988626
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$25-100M",
+      "firms": 11834,
+      "employees": 1657534
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "revenueSize:$100M+",
+      "firms": 5866,
+      "employees": 7615871
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:<$100K",
+      "firms": 9826,
+      "employees": 12043
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$100-250K",
+      "firms": 18641,
+      "employees": 29945
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$250-500K",
+      "firms": 22522,
+      "employees": 48659
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$500K-1M",
+      "firms": 29887,
+      "employees": 90600
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 45513,
+      "employees": 222153
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 31821,
+      "employees": 244226
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$5-10M",
+      "firms": 26753,
+      "employees": 320789
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$10-25M",
+      "firms": 24783,
+      "employees": 525834
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$25-100M",
+      "firms": 18341,
+      "employees": 894402
+    },
+    {
+      "source": "industry:Wholesale trade",
+      "target": "revenueSize:$100M+",
+      "firms": 8751,
+      "employees": 3768713
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:<$100K",
+      "firms": 25290,
+      "employees": 33931
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$100-250K",
+      "firms": 57493,
+      "employees": 116689
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$250-500K",
+      "firms": 81001,
+      "employees": 239405
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$500K-1M",
+      "firms": 104058,
+      "employees": 436969
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 127540,
+      "employees": 849463
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 66730,
+      "employees": 704755
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$5-10M",
+      "firms": 36865,
+      "employees": 652927
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$10-25M",
+      "firms": 21665,
+      "employees": 745592
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$25-100M",
+      "firms": 14228,
+      "employees": 1111986
+    },
+    {
+      "source": "industry:Retail trade",
+      "target": "revenueSize:$100M+",
+      "firms": 4678,
+      "employees": 11985469
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:<$100K",
+      "firms": 14973,
+      "employees": 749818
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$100-250K",
+      "firms": 34538,
+      "employees": 54213
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$250-500K",
+      "firms": 31741,
+      "employees": 76756
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$500K-1M",
+      "firms": 27034,
+      "employees": 126452
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 30624,
+      "employees": 308354
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 16484,
+      "employees": 373334
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$5-10M",
+      "firms": 9236,
+      "employees": 311608
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$10-25M",
+      "firms": 5819,
+      "employees": 420560
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$25-100M",
+      "firms": 2803,
+      "employees": 487101
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "revenueSize:$100M+",
+      "firms": 974,
+      "employees": 3025018
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:<$100K",
+      "firms": 7794,
+      "employees": 32950
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$100-250K",
+      "firms": 12977,
+      "employees": 24598
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$250-500K",
+      "firms": 11653,
+      "employees": 34815
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$500K-1M",
+      "firms": 11063,
+      "employees": 53239
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 11580,
+      "employees": 101601
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 6109,
+      "employees": 100229
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$5-10M",
+      "firms": 4014,
+      "employees": 117673
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$10-25M",
+      "firms": 3068,
+      "employees": 185063
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$25-100M",
+      "firms": 2301,
+      "employees": 383566
+    },
+    {
+      "source": "industry:Information",
+      "target": "revenueSize:$100M+",
+      "firms": 1281,
+      "employees": 2974526
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:<$100K",
+      "firms": 19286,
+      "employees": 23571
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$100-250K",
+      "firms": 41863,
+      "employees": 71673
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$250-500K",
+      "firms": 47562,
+      "employees": 127739
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$500K-1M",
+      "firms": 38106,
+      "employees": 156424
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 27416,
+      "employees": 190418
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 10266,
+      "employees": 138279
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$5-10M",
+      "firms": 6168,
+      "employees": 155144
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$10-25M",
+      "firms": 5127,
+      "employees": 273407
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$25-100M",
+      "firms": 3766,
+      "employees": 545492
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "revenueSize:$100M+",
+      "firms": 2497,
+      "employees": 5656449
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:<$100K",
+      "firms": 33843,
+      "employees": 41694
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$100-250K",
+      "firms": 62678,
+      "employees": 97081
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$250-500K",
+      "firms": 57558,
+      "employees": 127230
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$500K-1M",
+      "firms": 48621,
+      "employees": 170241
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 40883,
+      "employees": 260774
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 15442,
+      "employees": 191305
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$5-10M",
+      "firms": 7723,
+      "employees": 183210
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$10-25M",
+      "firms": 4436,
+      "employees": 221199
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$25-100M",
+      "firms": 2192,
+      "employees": 291912
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "revenueSize:$100M+",
+      "firms": 840,
+      "employees": 867889
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:<$100K",
+      "firms": 89018,
+      "employees": 161295
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$100-250K",
+      "firms": 156069,
+      "employees": 255421
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$250-500K",
+      "firms": 135986,
+      "employees": 345812
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$500K-1M",
+      "firms": 111011,
+      "employees": 490266
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 101147,
+      "employees": 862146
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 41425,
+      "employees": 712127
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$5-10M",
+      "firms": 22692,
+      "employees": 720263
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$10-25M",
+      "firms": 14808,
+      "employees": 981057
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$25-100M",
+      "firms": 7793,
+      "employees": 1433539
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "revenueSize:$100M+",
+      "firms": 2752,
+      "employees": 5025867
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:<$100K",
+      "firms": 38365,
+      "employees": 106202
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$100-250K",
+      "firms": 58296,
+      "employees": 140218
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$250-500K",
+      "firms": 55032,
+      "employees": 223686
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$500K-1M",
+      "firms": 51555,
+      "employees": 367114
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 46261,
+      "employees": 677594
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 19627,
+      "employees": 613912
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$5-10M",
+      "firms": 10828,
+      "employees": 683003
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$10-25M",
+      "firms": 6862,
+      "employees": 988942
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$25-100M",
+      "firms": 3752,
+      "employees": 1790133
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "revenueSize:$100M+",
+      "firms": 1273,
+      "employees": 7942168
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:<$100K",
+      "firms": 10780,
+      "employees": 21777
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$100-250K",
+      "firms": 16695,
+      "employees": 62784
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$250-500K",
+      "firms": 15481,
+      "employees": 100069
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$500K-1M",
+      "firms": 11446,
+      "employees": 119591
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 7774,
+      "employees": 136337
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 2375,
+      "employees": 74763
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$5-10M",
+      "firms": 1074,
+      "employees": 58116
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$10-25M",
+      "firms": 571,
+      "employees": 59454
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$25-100M",
+      "firms": 261,
+      "employees": 80764
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "revenueSize:$100M+",
+      "firms": 85,
+      "employees": 100222
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:<$100K",
+      "firms": 50858,
+      "employees": 71617
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$100-250K",
+      "firms": 95680,
+      "employees": 228594
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$250-500K",
+      "firms": 111175,
+      "employees": 480840
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$500K-1M",
+      "firms": 124743,
+      "employees": 954909
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 115724,
+      "employees": 1760925
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 40812,
+      "employees": 1346278
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$5-10M",
+      "firms": 21094,
+      "employees": 1379514
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$10-25M",
+      "firms": 14029,
+      "employees": 1900599
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$25-100M",
+      "firms": 7033,
+      "employees": 2500356
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "revenueSize:$100M+",
+      "firms": 2636,
+      "employees": 10938129
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:<$100K",
+      "firms": 14109,
+      "employees": 22318
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$100-250K",
+      "firms": 22283,
+      "employees": 68391
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$250-500K",
+      "firms": 22030,
+      "employees": 118124
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$500K-1M",
+      "firms": 18959,
+      "employees": 173096
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 16798,
+      "employees": 305014
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 6800,
+      "employees": 243017
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$5-10M",
+      "firms": 3700,
+      "employees": 237088
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$10-25M",
+      "firms": 2126,
+      "employees": 271724
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$25-100M",
+      "firms": 918,
+      "employees": 295713
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "revenueSize:$100M+",
+      "firms": 353,
+      "employees": 705067
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:<$100K",
+      "firms": 17366,
+      "employees": 38574
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$100-250K",
+      "firms": 53588,
+      "employees": 191072
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$250-500K",
+      "firms": 88782,
+      "employees": 528183
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$500K-1M",
+      "firms": 117248,
+      "employees": 1237152
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 122708,
+      "employees": 2546407
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 37899,
+      "employees": 1561310
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$5-10M",
+      "firms": 12606,
+      "employees": 970736
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$10-25M",
+      "firms": 5807,
+      "employees": 986063
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$25-100M",
+      "firms": 2544,
+      "employees": 1306996
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "revenueSize:$100M+",
+      "firms": 770,
+      "employees": 4197340
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:<$100K",
+      "firms": 62960,
+      "employees": 94783
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$100-250K",
+      "firms": 102833,
+      "employees": 247024
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$250-500K",
+      "firms": 95263,
+      "employees": 380723
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$500K-1M",
+      "firms": 82640,
+      "employees": 520383
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$1-2.5M",
+      "firms": 62218,
+      "employees": 678115
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$2.5-5M",
+      "firms": 18507,
+      "employees": 374464
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$5-10M",
+      "firms": 7609,
+      "employees": 273544
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$10-25M",
+      "firms": 3916,
+      "employees": 269438
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$25-100M",
+      "firms": 1849,
+      "employees": 324499
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "revenueSize:$100M+",
+      "firms": 567,
+      "employees": 573751
+    }
+  ],
+  "availablePairs": [
+    [
+      "industry",
+      "employeeSize"
+    ],
+    [
+      "industry",
+      "revenueSize"
+    ]
+  ]
+}

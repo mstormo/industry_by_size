@@ -1,0 +1,196 @@
+{
+  "regions": [
+    {
+      "id": "us",
+      "label": "United States",
+      "group": null,
+      "hasRevenue": true
+    },
+    {
+      "id": "canada",
+      "label": "Canada",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
+      "id": "europe",
+      "label": "Europe",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
+      "id": "de",
+      "label": "Germany",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "fr",
+      "label": "France",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "gb",
+      "label": "United Kingdom",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "it",
+      "label": "Italy",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "es",
+      "label": "Spain",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "nl",
+      "label": "Netherlands",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "be",
+      "label": "Belgium",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "at",
+      "label": "Austria",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "ch",
+      "label": "Switzerland",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "se",
+      "label": "Sweden",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "no",
+      "label": "Norway",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "dk",
+      "label": "Denmark",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "fi",
+      "label": "Finland",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "pl",
+      "label": "Poland",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "cz",
+      "label": "Czechia",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "pt",
+      "label": "Portugal",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "ie",
+      "label": "Ireland",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "gr",
+      "label": "Greece",
+      "group": "europe",
+      "hasRevenue": false
+    },
+    {
+      "id": "apac",
+      "label": "Asia-Pacific",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
+      "id": "jp",
+      "label": "Japan",
+      "group": "apac",
+      "hasRevenue": false
+    },
+    {
+      "id": "kr",
+      "label": "South Korea",
+      "group": "apac",
+      "hasRevenue": false
+    },
+    {
+      "id": "nz",
+      "label": "New Zealand",
+      "group": "apac",
+      "hasRevenue": false
+    },
+    {
+      "id": "latam",
+      "label": "Latin America",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
+      "id": "cr",
+      "label": "Costa Rica",
+      "group": "latam",
+      "hasRevenue": false
+    },
+    {
+      "id": "br",
+      "label": "Brazil",
+      "group": "latam",
+      "hasRevenue": false
+    },
+    {
+      "id": "other_oecd",
+      "label": "Other OECD",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
+      "id": "tr",
+      "label": "Turkey",
+      "group": "other_oecd",
+      "hasRevenue": false
+    },
+    {
+      "id": "il",
+      "label": "Israel",
+      "group": "other_oecd",
+      "hasRevenue": false
+    }
+  ],
+  "groups": {
+    "europe": "Europe",
+    "apac": "Asia-Pacific",
+    "latam": "Latin America",
+    "other_oecd": "Other OECD"
+  }
+}
