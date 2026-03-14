@@ -11,11 +11,6 @@ def _mock_emp_records() -> list[CensusRecord]:
             target_dimension="employeeSize", target_value="100-249",
             firms=13573, employees=943335,
         ),
-        CensusRecord(
-            source_dimension="industry", source_value="Information",
-            target_dimension="employeeSize", target_value="500+",
-            firms=1200, employees=890000,
-        ),
     ]
 
 
@@ -29,18 +24,38 @@ def _mock_rev_records() -> list[CensusRecord]:
     ]
 
 
+def _mock_oecd_records(codes, data_dir) -> list[CensusRecord]:
+    return [
+        CensusRecord(
+            source_dimension="industry", source_value="Manufacturing",
+            target_dimension="employeeSize", target_value="1-9",
+            firms=100000, employees=400000,
+        ),
+    ]
+
+
 @patch("data.pipeline.fetch_industry_by_revenue", return_value=_mock_rev_records())
 @patch("data.pipeline.fetch_industry_by_employment", return_value=_mock_emp_records())
-def test_run_pipeline_produces_sankey_json(mock_emp, mock_rev, tmp_path):
-    run_pipeline(str(tmp_path / "sankey-data.json"))
+@patch("data.pipeline.load_oecd_by_employment", side_effect=_mock_oecd_records)
+def test_run_pipeline_produces_multi_region(mock_oecd, mock_emp, mock_rev, tmp_path):
+    run_pipeline(str(tmp_path), regions=["us", "de"])
 
-    output = tmp_path / "sankey-data.json"
-    assert output.exists()
+    # US file should exist with revenue data
+    us_file = tmp_path / "sankey-us.json"
+    assert us_file.exists()
+    us_data = json.loads(us_file.read_text())
+    assert "revenueSize" in us_data["dimensions"]
+    assert ("industry", "revenueSize") in [tuple(p) for p in us_data["availablePairs"]]
 
-    sankey = json.loads(output.read_text())
-    assert len(sankey["nodes"]) > 0
-    assert len(sankey["links"]) == 3
-    assert "availablePairs" in sankey
-    # Verify links have firms/employees
-    assert "firms" in sankey["links"][0]
-    assert "employees" in sankey["links"][0]
+    # Germany file should exist without revenue data
+    de_file = tmp_path / "sankey-de.json"
+    assert de_file.exists()
+    de_data = json.loads(de_file.read_text())
+    assert "revenueSize" not in de_data["dimensions"]
+
+    # regions.json should exist
+    regions_file = tmp_path / "regions.json"
+    assert regions_file.exists()
+    regions = json.loads(regions_file.read_text())
+    assert "regions" in regions
+    assert "groups" in regions
