@@ -47,16 +47,21 @@ def run_pipeline(output_dir: str, regions: list[str] | None = None, skip_oecd: b
         region_set = set(regions)
         target_regions = [r for r in REGIONS if r.id in region_set]
 
+    generated_ids: set[str] = set()
     for region in target_regions:
         if region.source == "census":
             _generate_us(output_dir)
+            generated_ids.add(region.id)
         elif region.source == "oecd" and not skip_oecd:
             _generate_oecd_region(region.id, region.oecd_codes, output_dir)
+            # Check if file was actually created (skipped if no data)
+            if (Path(output_dir) / f"sankey-{region.id}.json").exists():
+                generated_ids.add(region.id)
 
-    # Always generate regions.json
+    # Generate regions.json with only regions that have data
     regions_path = Path(output_dir) / "regions.json"
-    regions_path.write_text(get_regions_json())
-    print(f"Wrote {regions_path}")
+    regions_path.write_text(get_regions_json(only_ids=generated_ids))
+    print(f"Wrote {regions_path} ({len(generated_ids)} regions)")
 
 
 if __name__ == "__main__":

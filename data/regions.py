@@ -75,8 +75,12 @@ REGION_GROUPS: dict[str, str] = {
 }
 
 
-def get_regions_json() -> str:
-    """Generate regions.json content for frontend consumption."""
+def get_regions_json(only_ids: set[str] | None = None) -> str:
+    """Generate regions.json content for frontend consumption.
+
+    If only_ids is provided, only include regions whose id is in the set.
+    """
+    filtered = REGIONS if only_ids is None else [r for r in REGIONS if r.id in only_ids]
     regions_list = [
         {
             "id": r.id,
@@ -84,7 +88,7 @@ def get_regions_json() -> str:
             "group": r.group,
             "hasRevenue": r.has_revenue,
         }
-        for r in REGIONS
+        for r in filtered
     ]
     return json.dumps({
         "regions": regions_list,
