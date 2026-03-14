@@ -3,7 +3,7 @@ import type { SankeyData, SankeyNode, DrillState, Dimension, FilteredSankey, San
 const cache = new Map<string, SankeyData>();
 let cachedRegions: RegionsData | null = null;
 
-/** Explicit sort order for US employee size labels (smallest → largest). */
+/** Explicit sort order for US employee size labels (smallest -> largest). */
 const EMPSIZE_ORDER: Record<string, number> = {
   '<5': 0,
   '5-9': 1,
@@ -18,7 +18,7 @@ const EMPSIZE_ORDER: Record<string, number> = {
   '5,000+': 10,
 };
 
-/** Explicit sort order for OECD employee size labels (smallest → largest). */
+/** Explicit sort order for OECD employee size labels (smallest -> largest). */
 const OECD_EMPSIZE_ORDER: Record<string, number> = {
   '1-9': 0,
   '10-19': 1,
@@ -27,7 +27,7 @@ const OECD_EMPSIZE_ORDER: Record<string, number> = {
   '250+': 4,
 };
 
-/** Explicit sort order for revenue size labels (smallest → largest). */
+/** Explicit sort order for revenue size labels (smallest -> largest). */
 const RCPSIZE_ORDER: Record<string, number> = {
   '<$100K': 0,
   '$100-250K': 1,

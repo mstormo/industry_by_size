@@ -12,8 +12,7 @@
       <h1>Industry Size Graph</h1>
       <select id="region-select"></select>
       <nav id="dimension-tabs">
-        <button class="tab active" data-dimension="industry">Industry</button>
-        <button class="tab" data-dimension="employeeSize">Company Size</button>
+        <button class="tab active" data-dimension="industry">Company Size</button>
         <button class="tab" data-dimension="revenueSize">Revenue</button>
       </nav>
       <div id="metric-toggle">
@@ -23,12 +22,19 @@
     </header>
     <div id="breadcrumb"></div>
     <main id="content">
+      <aside id="sidebar-left" class="sidebar">
+        <h2 id="sidebar-left-title">Details</h2>
+        <div id="sidebar-left-content">
+          <p class="placeholder">Select a node to see details</p>
+        </div>
+      </aside>
       <div id="sankey-container">
         <svg id="sankey-svg"></svg>
+        <div id="source-attribution"></div>
       </div>
-      <aside id="sidebar">
-        <h2>Details</h2>
-        <div id="sidebar-content">
+      <aside id="sidebar-right" class="sidebar">
+        <h2 id="sidebar-right-title">Details</h2>
+        <div id="sidebar-right-content">
           <p class="placeholder">Select a node to see details</p>
         </div>
       </aside>

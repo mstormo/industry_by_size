@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderSankey } from '../sankey';
-import type { FilteredSankey, SankeyNode } from '../types';
+import type { FilteredSankey } from '../types';
 
 const MOCK_FILTERED: FilteredSankey = {
   nodes: [
@@ -16,6 +16,8 @@ const MOCK_FILTERED: FilteredSankey = {
   ],
 };
 
+const NO_SELECTION = new Set<string>();
+
 function createSvgElement(): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('width', '800');
@@ -27,6 +29,10 @@ function createSvgElement(): SVGSVGElement {
   return svg;
 }
 
+function makeCallbacks() {
+  return { onToggleNode: () => {}, onNodeDblClick: () => {}, onNodeHover: () => {} };
+}
+
 describe('renderSankey', () => {
   let svg: SVGSVGElement;
 
@@ -36,8 +42,7 @@ describe('renderSankey', () => {
   });
 
   it('renders nodes and links for valid data', () => {
-    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, MOCK_FILTERED, callbacks, 'firms');
+    renderSankey(svg, MOCK_FILTERED, makeCallbacks(), 'firms', NO_SELECTION);
 
     const nodes = svg.querySelectorAll('.sankey-node');
     expect(nodes.length).toBe(4);
@@ -47,38 +52,42 @@ describe('renderSankey', () => {
   });
 
   it('shows empty message when no data', () => {
-    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, { nodes: [], links: [] }, callbacks, 'firms');
+    renderSankey(svg, { nodes: [], links: [] }, makeCallbacks(), 'firms', NO_SELECTION);
 
     const text = svg.querySelector('text');
     expect(text?.textContent).toBe('No data to display');
   });
 
   it('shows unavailable pair message when flagged', () => {
-    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, { nodes: [], links: [], unavailablePair: true }, callbacks, 'firms');
+    renderSankey(svg, { nodes: [], links: [], unavailablePair: true }, makeCallbacks(), 'firms', NO_SELECTION);
 
     const text = svg.querySelector('text');
     expect(text?.textContent).toBe('This dimension combination is not available in Census data.');
   });
 
-  it('fires onNodeClick callback', () => {
-    let clickedNode: SankeyNode | null = null;
+  it('fires onToggleNode callback on click', () => {
+    let toggledId: string | null = null;
     const callbacks = {
-      onNodeClick: (node: SankeyNode) => { clickedNode = node; },
+      onToggleNode: (id: string) => { toggledId = id; },
+      onNodeDblClick: () => {},
       onNodeHover: () => {},
     };
-    renderSankey(svg, MOCK_FILTERED, callbacks, 'firms');
+    renderSankey(svg, MOCK_FILTERED, callbacks, 'firms', NO_SELECTION);
 
     const rect = svg.querySelector('.sankey-node rect') as SVGRectElement;
     rect?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(clickedNode).not.toBeNull();
+    expect(toggledId).not.toBeNull();
   });
 
   it('uses employees metric when specified', () => {
-    const callbacks = { onNodeClick: () => {}, onNodeHover: () => {} };
-    renderSankey(svg, MOCK_FILTERED, callbacks, 'employees');
+    renderSankey(svg, MOCK_FILTERED, makeCallbacks(), 'employees', NO_SELECTION);
     const nodes = svg.querySelectorAll('.sankey-node');
     expect(nodes.length).toBe(4);
+  });
+
+  it('returns a handle with updateSelection', () => {
+    const handle = renderSankey(svg, MOCK_FILTERED, makeCallbacks(), 'firms', NO_SELECTION);
+    expect(handle).not.toBeNull();
+    expect(typeof handle!.updateSelection).toBe('function');
   });
 });

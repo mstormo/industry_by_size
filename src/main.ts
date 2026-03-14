@@ -1,7 +1,7 @@
 import { loadSankeyData, loadRegions, filterSankeyForDrill, getAvailableDimensions } from './data';
-import { renderSankey } from './sankey';
+import { renderSankey, SankeyHandle } from './sankey';
 import { initControls, setRevenueTabEnabled, setActiveTab, updateBreadcrumb } from './controls';
-import { updateSidebar } from './sidebar';
+import { updateSidebars } from './sidebar';
 import type { SankeyData, SankeyNode, DrillState, Dimension, Metric, FilteredSankey, RegionsData, RegionInfo } from './types';
 
 let sankeyData: SankeyData;
@@ -13,27 +13,52 @@ let currentState: DrillState = {
 };
 let currentMetric: Metric = 'firms';
 let currentFiltered: FilteredSankey;
+let currentSelectedIds: Set<string> = new Set();
+let sankeyHandle: SankeyHandle | null = null;
 
 function getCurrentRegion(): RegionInfo | undefined {
   return regionsData?.regions.find(r => r.id === currentRegionId);
+}
+
+function leftDim(): Dimension {
+  return currentState.path[0];
 }
 
 function rightDim(): Dimension {
   return currentState.path[currentState.path.length - 1];
 }
 
-function refresh(): void {
-  const svg = document.getElementById('sankey-svg') as unknown as SVGSVGElement;
-  if (!svg || !sankeyData) return;
+function refreshSidebars(hoveredNode: SankeyNode | null): void {
+  updateSidebars(leftDim(), rightDim(), {
+    data: currentFiltered,
+    metric: currentMetric,
+    selectedIds: currentSelectedIds,
+    hoveredNode,
+    callbacks: {
+      onToggleNode: toggleSelection,
+      onClearSelection: clearSelection,
+    },
+  });
+}
 
-  currentFiltered = filterSankeyForDrill(sankeyData, currentState);
-  renderSankey(svg, currentFiltered, {
-    onNodeClick: handleNodeClick,
-    onNodeHover: handleNodeHover,
-  }, currentMetric);
-  updateSidebar(currentFiltered, null, currentMetric);
-  updateBreadcrumb(currentState, handleBreadcrumbClick);
-  updateSourceAttribution();
+function toggleSelection(nodeId: string): void {
+  if (nodeId === '__clear__') {
+    clearSelection();
+    return;
+  }
+  if (currentSelectedIds.has(nodeId)) {
+    currentSelectedIds.delete(nodeId);
+  } else {
+    currentSelectedIds.add(nodeId);
+  }
+  sankeyHandle?.updateSelection(currentSelectedIds);
+  refreshSidebars(null);
+}
+
+function clearSelection(): void {
+  currentSelectedIds = new Set();
+  sankeyHandle?.updateSelection(currentSelectedIds);
+  refreshSidebars(null);
 }
 
 function updateSourceAttribution(): void {
@@ -53,7 +78,23 @@ function updateSourceAttribution(): void {
   }
 }
 
-function handleNodeClick(node: SankeyNode): void {
+function refresh(): void {
+  const svg = document.getElementById('sankey-svg') as unknown as SVGSVGElement;
+  if (!svg || !sankeyData) return;
+
+  currentSelectedIds = new Set();
+  currentFiltered = filterSankeyForDrill(sankeyData, currentState);
+  sankeyHandle = renderSankey(svg, currentFiltered, {
+    onToggleNode: toggleSelection,
+    onNodeDblClick: handleNodeDblClick,
+    onNodeHover: handleNodeHover,
+  }, currentMetric, currentSelectedIds);
+  refreshSidebars(null);
+  updateBreadcrumb(currentState, handleBreadcrumbClick);
+  updateSourceAttribution();
+}
+
+function handleNodeDblClick(node: SankeyNode): void {
   const available = getAvailableDimensions(currentState.path, sankeyData.availablePairs);
   if (available.length === 0) return;
 
@@ -65,7 +106,7 @@ function handleNodeClick(node: SankeyNode): void {
 }
 
 function handleNodeHover(node: SankeyNode | null): void {
-  updateSidebar(currentFiltered, node, currentMetric);
+  refreshSidebars(node);
 }
 
 function handleBreadcrumbClick(level: number): void {
@@ -77,6 +118,7 @@ function handleBreadcrumbClick(level: number): void {
 }
 
 function handleDimensionChange(dimension: Dimension): void {
+  // Industry is always on the left; the tab selects the right-side dimension.
   const rightDim = dimension === 'industry' ? 'employeeSize' : dimension;
   currentState = {
     path: ['industry', rightDim],

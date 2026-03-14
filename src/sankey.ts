@@ -15,7 +15,8 @@ const DIMENSION_COLORS: Record<string, readonly string[]> = {
 };
 
 interface SankeyCallbacks {
-  onNodeClick: (node: SankeyNode) => void;
+  onToggleNode: (nodeId: string) => void;
+  onNodeDblClick: (node: SankeyNode) => void;
   onNodeHover: (node: SankeyNode | null) => void;
 }
 
@@ -33,16 +34,21 @@ interface D3SankeyLink {
   width?: number;
 }
 
+export interface SankeyHandle {
+  updateSelection: (selectedIds: Set<string>) => void;
+}
+
 export function renderSankey(
   svgElement: SVGSVGElement,
   data: FilteredSankey,
   callbacks: SankeyCallbacks,
   metric: Metric,
-): void {
+  selectedIds: Set<string>,
+): SankeyHandle | null {
   const svg = d3.select(svgElement);
   const { width, height } = svgElement.getBoundingClientRect();
 
-  if (width === 0 || height === 0) return;
+  if (width === 0 || height === 0) return null;
 
   svg.selectAll('*').remove();
 
@@ -55,7 +61,7 @@ export function renderSankey(
       .text(data.unavailablePair
         ? 'This dimension combination is not available in Census data.'
         : 'No data to display');
-    return;
+    return null;
   }
 
   const nodeMap = new Map(data.nodes.map((n, i) => [n.id, i]));
@@ -70,6 +76,7 @@ export function renderSankey(
 
   const sankeyLayout = sankey<D3SankeyNode, any>()
     .nodeId(((_d: any, i: number) => i) as any)
+    .nodeSort(() => 0)
     .nodeWidth(20)
     .nodePadding(12)
     .extent([[1, 1], [width - 1, height - 6]]);
@@ -79,12 +86,65 @@ export function renderSankey(
     links: graphLinks,
   } as any) as unknown as SankeyGraph<D3SankeyNode, D3SankeyLink>;
 
+  // Build id→D3SankeyNode map for external selection
+  const idToNode = new Map<string, D3SankeyNode>();
+  for (const n of graph.nodes) idToNode.set(n.id, n);
+
+  // Current selection set (by reference to D3 nodes)
+  let currentSelected = new Set<D3SankeyNode>();
+  function syncSelected(ids: Set<string>): void {
+    currentSelected = new Set<D3SankeyNode>();
+    for (const id of ids) {
+      const n = idToNode.get(id);
+      if (n) currentSelected.add(n);
+    }
+  }
+  syncSelected(selectedIds);
+
   function getNodeColor(node: D3SankeyNode): string {
     const colors = DIMENSION_COLORS[node.dimension] || DIMENSION_COLORS.industry;
     const nodesInDim = graph.nodes.filter(n => n.dimension === node.dimension);
     const idx = nodesInDim.indexOf(node);
     return colors[idx % colors.length];
   }
+
+  function isLinkConnectedToSelection(l: D3SankeyLink): boolean {
+    for (const n of currentSelected) {
+      if (l.source === n || l.target === n) return true;
+    }
+    return false;
+  }
+
+  function updateHighlights(hoveredNode: D3SankeyNode | null): void {
+    const hasSelection = currentSelected.size > 0;
+    const hasHover = hoveredNode !== null;
+
+    if (!hasSelection && !hasHover) {
+      linkPaths.classed('highlighted', false).classed('dimmed', false);
+      nodeRects.classed('selected', false);
+      return;
+    }
+
+    linkPaths
+      .classed('highlighted', (l: D3SankeyLink) => {
+        if (hasHover && (l.source === hoveredNode || l.target === hoveredNode)) return true;
+        return isLinkConnectedToSelection(l);
+      })
+      .classed('dimmed', (l: D3SankeyLink) => {
+        if (hasHover && (l.source === hoveredNode || l.target === hoveredNode)) return false;
+        if (isLinkConnectedToSelection(l)) return false;
+        return true;
+      });
+
+    nodeRects.classed('selected', (d: D3SankeyNode) => currentSelected.has(d));
+  }
+
+  // Click on SVG background to clear selection
+  svg.on('click', (event: MouseEvent) => {
+    if (event.target === svgElement) {
+      callbacks.onToggleNode('__clear__');
+    }
+  });
 
   const linkGroup = svg.append('g').attr('class', 'links');
   const linkPaths = linkGroup.selectAll('.sankey-link')
@@ -102,22 +162,25 @@ export function renderSankey(
     .attr('class', 'sankey-node')
     .attr('transform', (d: D3SankeyNode) => `translate(${d.x0},${d.y0})`);
 
-  nodeElements.append('rect')
+  const nodeRects = nodeElements.append('rect')
     .attr('height', (d: D3SankeyNode) => (d.y1! - d.y0!))
     .attr('width', sankeyLayout.nodeWidth())
     .attr('fill', (d: D3SankeyNode) => getNodeColor(d))
     .attr('rx', 3)
-    .on('click', (_event: MouseEvent, d: D3SankeyNode) => {
-      callbacks.onNodeClick(d);
+    .on('click', (event: MouseEvent, d: D3SankeyNode) => {
+      event.stopPropagation();
+      callbacks.onToggleNode(d.id);
+    })
+    .on('dblclick', (event: MouseEvent, d: D3SankeyNode) => {
+      event.stopPropagation();
+      callbacks.onNodeDblClick(d);
     })
     .on('mouseenter', (_event: MouseEvent, d: D3SankeyNode) => {
-      linkPaths
-        .classed('highlighted', (l: D3SankeyLink) => l.source === d || l.target === d)
-        .classed('dimmed', (l: D3SankeyLink) => l.source !== d && l.target !== d);
+      updateHighlights(d);
       callbacks.onNodeHover(d);
     })
     .on('mouseleave', () => {
-      linkPaths.classed('highlighted', false).classed('dimmed', false);
+      updateHighlights(null);
       callbacks.onNodeHover(null);
     });
 
@@ -127,4 +190,14 @@ export function renderSankey(
     .attr('dy', '0.35em')
     .attr('text-anchor', (d: D3SankeyNode) => (d.x0! < width / 2 ? 'start' : 'end'))
     .text((d: D3SankeyNode) => d.label);
+
+  // Apply initial selection highlights
+  updateHighlights(null);
+
+  return {
+    updateSelection(ids: Set<string>) {
+      syncSelected(ids);
+      updateHighlights(null);
+    },
+  };
 }
