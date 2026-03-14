@@ -1,10 +1,12 @@
-import { loadSankeyData, filterSankeyForDrill, getAvailableDimensions } from './data';
+import { loadSankeyData, loadRegions, filterSankeyForDrill, getAvailableDimensions } from './data';
 import { renderSankey } from './sankey';
-import { initControls, updateBreadcrumb } from './controls';
+import { initControls, setRevenueTabEnabled, setActiveTab, updateBreadcrumb } from './controls';
 import { updateSidebar } from './sidebar';
-import type { SankeyData, SankeyNode, DrillState, Dimension, Metric, FilteredSankey } from './types';
+import type { SankeyData, SankeyNode, DrillState, Dimension, Metric, FilteredSankey, RegionsData, RegionInfo } from './types';
 
 let sankeyData: SankeyData;
+let regionsData: RegionsData;
+let currentRegionId: string = 'us';
 let currentState: DrillState = {
   path: ['industry', 'employeeSize'],
   selections: [],
@@ -12,9 +14,12 @@ let currentState: DrillState = {
 let currentMetric: Metric = 'firms';
 let currentFiltered: FilteredSankey;
 
-function getDefaultSecondDimension(startDim: Dimension): Dimension | undefined {
-  const available = getAvailableDimensions([startDim], sankeyData.availablePairs);
-  return available[0];
+function getCurrentRegion(): RegionInfo | undefined {
+  return regionsData?.regions.find(r => r.id === currentRegionId);
+}
+
+function rightDim(): Dimension {
+  return currentState.path[currentState.path.length - 1];
 }
 
 function refresh(): void {
@@ -28,6 +33,24 @@ function refresh(): void {
   }, currentMetric);
   updateSidebar(currentFiltered, null, currentMetric);
   updateBreadcrumb(currentState, handleBreadcrumbClick);
+  updateSourceAttribution();
+}
+
+function updateSourceAttribution(): void {
+  const el = document.getElementById('source-attribution');
+  if (!el) return;
+  if (currentRegionId === 'us') {
+    const dim = rightDim();
+    if (dim === 'employeeSize') {
+      el.textContent = 'Source: SUSB 2022, Census Bureau';
+    } else if (dim === 'revenueSize') {
+      el.textContent = 'Source: Economic Census 2022, Census Bureau';
+    } else {
+      el.textContent = '';
+    }
+  } else {
+    el.textContent = 'Source: OECD SDBS 2023';
+  }
 }
 
 function handleNodeClick(node: SankeyNode): void {
@@ -54,10 +77,9 @@ function handleBreadcrumbClick(level: number): void {
 }
 
 function handleDimensionChange(dimension: Dimension): void {
-  const secondDim = getDefaultSecondDimension(dimension);
-  if (!secondDim) return;
+  const rightDim = dimension === 'industry' ? 'employeeSize' : dimension;
   currentState = {
-    path: [dimension, secondDim],
+    path: ['industry', rightDim],
     selections: [],
   };
   refresh();
@@ -68,16 +90,60 @@ function handleMetricChange(metric: Metric): void {
   refresh();
 }
 
-async function init(): Promise<void> {
+async function handleRegionChange(regionId: string): Promise<void> {
+  const previousRegionId = currentRegionId;
+  currentRegionId = regionId;
+  const region = getCurrentRegion();
+
+  // Update Revenue tab state
+  setRevenueTabEnabled(region?.hasRevenue ?? false);
+
+  // If on revenue tab and new region has no revenue, switch to employee size
+  if (rightDim() === 'revenueSize' && !region?.hasRevenue) {
+    currentState = { path: ['industry', 'employeeSize'], selections: [] };
+    setActiveTab('industry');
+  } else {
+    currentState = { ...currentState, selections: [] };
+  }
+
   try {
-    sankeyData = await loadSankeyData();
+    sankeyData = await loadSankeyData(regionId);
+    refresh();
+  } catch (e) {
+    console.error('Failed to load region data:', e);
+    // Revert to previous region
+    currentRegionId = previousRegionId;
+    const regionSelect = document.getElementById('region-select') as HTMLSelectElement | null;
+    if (regionSelect) regionSelect.value = previousRegionId;
+    setRevenueTabEnabled(getCurrentRegion()?.hasRevenue ?? false);
+    refresh();
+  }
+}
+
+async function init(): Promise<void> {
+  // Load regions data (fallback to US-only if unavailable)
+  try {
+    regionsData = await loadRegions();
+  } catch {
+    regionsData = {
+      regions: [{ id: 'us', label: 'United States', group: null, hasRevenue: true }],
+      groups: {},
+    };
+    // Hide region selector since we only have US
+    const regionSelect = document.getElementById('region-select');
+    if (regionSelect) regionSelect.style.display = 'none';
+  }
+
+  // Load initial sankey data
+  try {
+    sankeyData = await loadSankeyData('us');
   } catch {
     const container = document.getElementById('sankey-container');
     if (container) {
       const msg = document.createElement('div');
       msg.setAttribute('style', 'display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;');
       const p = document.createElement('p');
-      p.textContent = 'Failed to load data. Run the Python pipeline first: cd data && python pipeline.py';
+      p.textContent = 'Failed to load data. Run the Python pipeline first: python3 -m data.pipeline';
       msg.appendChild(p);
       while (container.firstChild) container.removeChild(container.firstChild);
       container.appendChild(msg);
@@ -85,9 +151,10 @@ async function init(): Promise<void> {
     return;
   }
 
-  initControls({
+  initControls(regionsData, {
     onDimensionChange: handleDimensionChange,
     onMetricChange: handleMetricChange,
+    onRegionChange: handleRegionChange,
   });
 
   let resizeTimer: ReturnType<typeof setTimeout>;
