@@ -6,7 +6,7 @@ import type { SankeyData, SankeyNode, DrillState, Dimension, Metric, FilteredSan
 
 let sankeyData: SankeyData;
 let regionsData: RegionsData;
-let currentRegionId: string = 'global';
+let currentRegionId: string = 'us';
 let currentState: DrillState = {
   path: ['industry', 'employeeSize'],
   selections: [],
@@ -178,7 +178,7 @@ async function init(): Promise<void> {
 
   // Load initial sankey data
   try {
-    sankeyData = await loadSankeyData('global');
+    sankeyData = await loadSankeyData('us');
   } catch {
     const container = document.getElementById('sankey-container');
     if (container) {
