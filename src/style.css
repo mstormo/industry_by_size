@@ -234,6 +234,29 @@ body {
   margin-top: 2px;
 }
 
+/* Region selector */
+#region-select {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#region-select option,
+#region-select optgroup {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Disabled tab — no pointer-events:none so title tooltip still shows */
+.tab.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   #content {
