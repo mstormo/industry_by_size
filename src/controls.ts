@@ -47,23 +47,21 @@ export function initControls(regionsData: RegionsData, callbacks: ControlsCallba
 }
 
 function populateRegionSelect(select: HTMLSelectElement, data: RegionsData): void {
-  // Add top-level regions (no group) as direct options
   const topLevel = data.regions.filter(r => r.group === null);
   for (const region of topLevel) {
-    // If this region is a group header, create an optgroup with its children
     const groupId = region.id;
     const children = data.regions.filter(r => r.group === groupId);
 
     if (children.length > 0) {
-      // Add the aggregate as a direct option first
-      const opt = document.createElement('option');
-      opt.value = region.id;
-      opt.textContent = region.label;
-      select.appendChild(opt);
-
-      // Add children in an optgroup
+      // Optgroup with the aggregate as its first selectable entry
       const group = document.createElement('optgroup');
-      group.label = `  ${data.groups[groupId] || region.label}`;
+      group.label = data.groups[groupId] || region.label;
+
+      const aggregateOpt = document.createElement('option');
+      aggregateOpt.value = region.id;
+      aggregateOpt.textContent = `${region.label} (all)`;
+      group.appendChild(aggregateOpt);
+
       for (const child of children) {
         const childOpt = document.createElement('option');
         childOpt.value = child.id;
