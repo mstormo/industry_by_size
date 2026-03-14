@@ -1,6 +1,7 @@
 .superpowers/
 .worktrees/
 data/raw/
+data/oecd/
 data/.venv/
 node_modules/
 dist/
