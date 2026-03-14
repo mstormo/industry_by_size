@@ -13,25 +13,26 @@ from data.models import CensusRecord
 logger = logging.getLogger(__name__)
 
 # ISIC Rev. 4 section codes → NAICS-style display labels
+# OECD CSV uses single-letter section codes (A, B, C, ...) not ISIC4_ prefixed
 ISIC_TO_LABEL: dict[str, str] = {
-    "ISIC4_A": "Agriculture, forestry, fishing and hunting",
-    "ISIC4_B": "Mining, quarrying, and oil and gas extraction",
-    "ISIC4_C": "Manufacturing",
-    "ISIC4_D": "Utilities",
-    "ISIC4_E": "Utilities",  # merged with D
-    "ISIC4_F": "Construction",
-    "ISIC4_G": "Wholesale and retail trade",
-    "ISIC4_H": "Transportation and warehousing",
-    "ISIC4_I": "Accommodation and food services",
-    "ISIC4_J": "Information",
-    "ISIC4_K": "Finance and insurance",
-    "ISIC4_L": "Real estate and rental and leasing",
-    "ISIC4_M": "Professional, scientific, and technical services",
-    "ISIC4_N": "Administrative and support and waste management",
-    "ISIC4_P": "Educational services",
-    "ISIC4_Q": "Health care and social assistance",
-    "ISIC4_R": "Arts, entertainment, and recreation",
-    "ISIC4_S": "Other services (except public administration)",
+    "A": "Agriculture, forestry, fishing and hunting",
+    "B": "Mining, quarrying, and oil and gas extraction",
+    "C": "Manufacturing",
+    "D": "Utilities",
+    "E": "Utilities",  # merged with D
+    "F": "Construction",
+    "G": "Wholesale and retail trade",
+    "H": "Transportation and warehousing",
+    "I": "Accommodation and food services",
+    "J": "Information",
+    "K": "Finance and insurance",
+    "L": "Real estate and rental and leasing",
+    "M": "Professional, scientific, and technical services",
+    "N": "Administrative and support and waste management",
+    "P": "Educational services",
+    "Q": "Health care and social assistance",
+    "R": "Arts, entertainment, and recreation",
+    "S": "Other services (except public administration)",
 }
 
 # OECD size class codes → display labels
@@ -66,7 +67,7 @@ def _parse_oecd_csv(path: Path) -> dict[tuple[str, str], tuple[int, int]]:
                 continue
             if size_class in OECD_SKIP_SIZES or size_class not in OECD_SIZE_LABELS:
                 continue
-            if measure not in ("ENTR", "EMP"):
+            if measure not in ("ENTR", "EMPE"):
                 continue
             if not value_str:
                 continue

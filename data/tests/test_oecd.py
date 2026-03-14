@@ -14,22 +14,22 @@ def _write_mock_csv(path: Path, rows: list[dict]) -> None:
 
 
 MOCK_DEU_ROWS = [
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "150000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "500000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "ENTR", "SIZE_CLASS": "S_GE250", "TIME_PERIOD": "2022", "OBS_VALUE": "2000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "EMP", "SIZE_CLASS": "S_GE250", "TIME_PERIOD": "2022", "OBS_VALUE": "3000000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_F", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "300000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_F", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "600000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "150000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "500000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "ENTR", "SIZE_CLASS": "S_GE250", "TIME_PERIOD": "2022", "OBS_VALUE": "2000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "EMPE", "SIZE_CLASS": "S_GE250", "TIME_PERIOD": "2022", "OBS_VALUE": "3000000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "F", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "300000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "F", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "600000"},
     # Older year — should be ignored when 2022 exists
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2021", "OBS_VALUE": "140000"},
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2021", "OBS_VALUE": "480000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2021", "OBS_VALUE": "140000"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2021", "OBS_VALUE": "480000"},
     # Total size class — should be skipped
-    {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_C", "MEASURE": "ENTR", "SIZE_CLASS": "_T", "TIME_PERIOD": "2022", "OBS_VALUE": "999999"},
+    {"REF_AREA": "DEU", "ACTIVITY": "C", "MEASURE": "ENTR", "SIZE_CLASS": "_T", "TIME_PERIOD": "2022", "OBS_VALUE": "999999"},
 ]
 
 MOCK_FRA_ROWS = [
-    {"REF_AREA": "FRA", "ACTIVITY": "ISIC4_C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "100000"},
-    {"REF_AREA": "FRA", "ACTIVITY": "ISIC4_C", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "350000"},
+    {"REF_AREA": "FRA", "ACTIVITY": "C", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "100000"},
+    {"REF_AREA": "FRA", "ACTIVITY": "C", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "350000"},
 ]
 
 
@@ -68,10 +68,10 @@ def test_uses_most_recent_year(tmp_path):
 
 def test_isic_d_e_merge_into_utilities(tmp_path):
     rows = [
-        {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_D", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "1000"},
-        {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_D", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "5000"},
-        {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_E", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "2000"},
-        {"REF_AREA": "DEU", "ACTIVITY": "ISIC4_E", "MEASURE": "EMP", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "8000"},
+        {"REF_AREA": "DEU", "ACTIVITY": "D", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "1000"},
+        {"REF_AREA": "DEU", "ACTIVITY": "D", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "5000"},
+        {"REF_AREA": "DEU", "ACTIVITY": "E", "MEASURE": "ENTR", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "2000"},
+        {"REF_AREA": "DEU", "ACTIVITY": "E", "MEASURE": "EMPE", "SIZE_CLASS": "S1T9", "TIME_PERIOD": "2022", "OBS_VALUE": "8000"},
     ]
     _write_mock_csv(tmp_path / "DEU.csv", rows)
     records = load_oecd_by_employment(["DEU"], tmp_path)
@@ -87,10 +87,10 @@ def test_missing_csv_skipped_gracefully(tmp_path):
 
 
 def test_isic_to_label_mapping():
-    assert ISIC_TO_LABEL["ISIC4_C"] == "Manufacturing"
-    assert ISIC_TO_LABEL["ISIC4_F"] == "Construction"
-    assert ISIC_TO_LABEL["ISIC4_D"] == "Utilities"
-    assert ISIC_TO_LABEL["ISIC4_E"] == "Utilities"
+    assert ISIC_TO_LABEL["C"] == "Manufacturing"
+    assert ISIC_TO_LABEL["F"] == "Construction"
+    assert ISIC_TO_LABEL["D"] == "Utilities"
+    assert ISIC_TO_LABEL["E"] == "Utilities"
 
 
 def test_oecd_size_labels():

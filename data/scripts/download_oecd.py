@@ -30,7 +30,7 @@ def download_country(code: str, output_dir: Path) -> bool:
     """Download OECD SDBS data for a single country. Returns True on success."""
     # Key format: FREQ.REF_AREA.MEASURE.ACTIVITY.SIZE_CLASS.UNIT_MEASURE
     # Use + for multi-value filtering in key path, . for wildcard
-    url = f"{OECD_API}/{DATASET}/A.{code}.ENTR+EMP..S1T9+S10T19+S20T49+S50T249+S_GE250+_T."
+    url = f"{OECD_API}/{DATASET}/A.{code}.ENTR+EMPE..S1T9+S10T19+S20T49+S50T249+S_GE250+_T."
     params = {
         "format": "csvfilewithlabels",
         "dimensionAtObservation": "AllDimensions",
