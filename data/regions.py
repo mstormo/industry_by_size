@@ -13,7 +13,16 @@ class Region:
     has_revenue: bool = False
 
 
-REGIONS: list[Region] = [
+def _all_oecd_codes() -> list[str]:
+    """Collect all unique OECD country codes from region definitions below."""
+    codes: set[str] = set()
+    for r in _COUNTRY_REGIONS:
+        codes.update(r.oecd_codes)
+    return sorted(codes)
+
+
+# Individual country/region definitions (used to build REGIONS list)
+_COUNTRY_REGIONS: list[Region] = [
     # United States — uses Census Bureau data (SUSB + ecnsize)
     Region("us", "United States", "census", has_revenue=True),
 
@@ -65,6 +74,11 @@ REGIONS: list[Region] = [
     Region("other_oecd", "Other OECD", "oecd", oecd_codes=["TUR", "ISR"]),
     Region("tr", "Turkey", "oecd", group="other_oecd", oecd_codes=["TUR"]),
     Region("il", "Israel", "oecd", group="other_oecd", oecd_codes=["ISR"]),
+]
+
+REGIONS: list[Region] = [
+    Region("global", "Globally", "oecd", oecd_codes=_all_oecd_codes()),
+    *_COUNTRY_REGIONS,
 ]
 
 REGION_GROUPS: dict[str, str] = {

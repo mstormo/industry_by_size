@@ -1,0 +1,636 @@
+{
+  "dimensions": [
+    "employeeSize",
+    "industry"
+  ],
+  "nodes": [
+    {
+      "id": "employeeSize:1-9",
+      "label": "1-9",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:10-19",
+      "label": "10-19",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:20-49",
+      "label": "20-49",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:250+",
+      "label": "250+",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "employeeSize:50-249",
+      "label": "50-249",
+      "dimension": "employeeSize"
+    },
+    {
+      "id": "industry:Accommodation and food services",
+      "label": "Accommodation and food services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Administrative and support and waste management",
+      "label": "Administrative and support and waste management",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Agriculture, forestry, fishing and hunting",
+      "label": "Agriculture, forestry, fishing and hunting",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Arts, entertainment, and recreation",
+      "label": "Arts, entertainment, and recreation",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Construction",
+      "label": "Construction",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Educational services",
+      "label": "Educational services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Finance and insurance",
+      "label": "Finance and insurance",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Health care and social assistance",
+      "label": "Health care and social assistance",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Information",
+      "label": "Information",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Manufacturing",
+      "label": "Manufacturing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Mining, quarrying, and oil and gas extraction",
+      "label": "Mining, quarrying, and oil and gas extraction",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Other services (except public administration)",
+      "label": "Other services (except public administration)",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Professional, scientific, and technical services",
+      "label": "Professional, scientific, and technical services",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Real estate and rental and leasing",
+      "label": "Real estate and rental and leasing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Transportation and warehousing",
+      "label": "Transportation and warehousing",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Utilities",
+      "label": "Utilities",
+      "dimension": "industry"
+    },
+    {
+      "id": "industry:Wholesale and retail trade",
+      "label": "Wholesale and retail trade",
+      "dimension": "industry"
+    }
+  ],
+  "links": [
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:20-49",
+      "firms": 8107,
+      "employees": 312268
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:50-249",
+      "firms": 12209,
+      "employees": 611863
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:20-49",
+      "firms": 23472,
+      "employees": 399803
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:250+",
+      "firms": 2326,
+      "employees": 2521731
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:1-9",
+      "firms": 303578,
+      "employees": 258475
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:250+",
+      "firms": 7625,
+      "employees": 2839573
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:10-19",
+      "firms": 247798,
+      "employees": 3718878
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:250+",
+      "firms": 40712,
+      "employees": 2905903
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:20-49",
+      "firms": 62265,
+      "employees": 861174
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:50-249",
+      "firms": 132011,
+      "employees": 13810897
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:250+",
+      "firms": 21256,
+      "employees": 4778860
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:50-249",
+      "firms": 25797,
+      "employees": 1130339
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:250+",
+      "firms": 6748,
+      "employees": 786147
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:20-49",
+      "firms": 20224,
+      "employees": 336369
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:50-249",
+      "firms": 36048,
+      "employees": 1057322
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:250+",
+      "firms": 33334,
+      "employees": 5145056
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:250+",
+      "firms": 5896,
+      "employees": 424245
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:50-249",
+      "firms": 6667,
+      "employees": 721342
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:50-249",
+      "firms": 15996,
+      "employees": 747306
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:20-49",
+      "firms": 2758,
+      "employees": 78964
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:10-19",
+      "firms": 86013,
+      "employees": 282016
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:20-49",
+      "firms": 182226,
+      "employees": 6510553
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:10-19",
+      "firms": 130297,
+      "employees": 947152
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:10-19",
+      "firms": 227318,
+      "employees": 863581
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:10-19",
+      "firms": 134652,
+      "employees": 562604
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:250+",
+      "firms": 8249,
+      "employees": 2173520
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:10-19",
+      "firms": 31588,
+      "employees": 189637
+    },
+    {
+      "source": "industry:Wholesale and retail trade",
+      "target": "employeeSize:10-19",
+      "firms": 433874,
+      "employees": 2633843
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:250+",
+      "firms": 14721,
+      "employees": 3712117
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:20-49",
+      "firms": 111774,
+      "employees": 3511740
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:250+",
+      "firms": 28698,
+      "employees": 4605588
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:10-19",
+      "firms": 239475,
+      "employees": 3173236
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:10-19",
+      "firms": 35468,
+      "employees": 249520
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:10-19",
+      "firms": 3697,
+      "employees": 37319
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:10-19",
+      "firms": 32410,
+      "employees": 212862
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:20-49",
+      "firms": 14312,
+      "employees": 215078
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:50-249",
+      "firms": 7596,
+      "employees": 299722
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:50-249",
+      "firms": 50711,
+      "employees": 4283920
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:20-49",
+      "firms": 66540,
+      "employees": 697328
+    },
+    {
+      "source": "industry:Wholesale and retail trade",
+      "target": "employeeSize:250+",
+      "firms": 55740,
+      "employees": 9804238
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:250+",
+      "firms": 23254,
+      "employees": 1506250
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:50-249",
+      "firms": 37816,
+      "employees": 1938936
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:50-249",
+      "firms": 2444,
+      "employees": 186447
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:10-19",
+      "firms": 92112,
+      "employees": 420055
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:10-19",
+      "firms": 51340,
+      "employees": 269631
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:20-49",
+      "firms": 107674,
+      "employees": 1173930
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:50-249",
+      "firms": 55761,
+      "employees": 3409954
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:250+",
+      "firms": 47262,
+      "employees": 26464237
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:20-49",
+      "firms": 77649,
+      "employees": 1461263
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:20-49",
+      "firms": 36169,
+      "employees": 490877
+    },
+    {
+      "source": "industry:Utilities",
+      "target": "employeeSize:10-19",
+      "firms": 10417,
+      "employees": 166332
+    },
+    {
+      "source": "industry:Wholesale and retail trade",
+      "target": "employeeSize:50-249",
+      "firms": 106685,
+      "employees": 4579161
+    },
+    {
+      "source": "industry:Wholesale and retail trade",
+      "target": "employeeSize:20-49",
+      "firms": 208549,
+      "employees": 3074357
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:20-49",
+      "firms": 57170,
+      "employees": 644002
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:50-249",
+      "firms": 43489,
+      "employees": 1530837
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:50-249",
+      "firms": 48979,
+      "employees": 1517396
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:250+",
+      "firms": 1703,
+      "employees": 637709
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:250+",
+      "firms": 6845,
+      "employees": 2261231
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:50-249",
+      "firms": 8294,
+      "employees": 352722
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:10-19",
+      "firms": 17417,
+      "employees": 155617
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:20-49",
+      "firms": 9439,
+      "employees": 174155
+    },
+    {
+      "source": "industry:Professional, scientific, and technical services",
+      "target": "employeeSize:1-9",
+      "firms": 6688670,
+      "employees": 1896834
+    },
+    {
+      "source": "industry:Wholesale and retail trade",
+      "target": "employeeSize:1-9",
+      "firms": 9347321,
+      "employees": 7956304
+    },
+    {
+      "source": "industry:Finance and insurance",
+      "target": "employeeSize:1-9",
+      "firms": 944390,
+      "employees": 375093
+    },
+    {
+      "source": "industry:Educational services",
+      "target": "employeeSize:1-9",
+      "firms": 1273871,
+      "employees": 643704
+    },
+    {
+      "source": "industry:Information",
+      "target": "employeeSize:1-9",
+      "firms": 1894103,
+      "employees": 489790
+    },
+    {
+      "source": "industry:Arts, entertainment, and recreation",
+      "target": "employeeSize:1-9",
+      "firms": 1536796,
+      "employees": 943124
+    },
+    {
+      "source": "industry:Transportation and warehousing",
+      "target": "employeeSize:1-9",
+      "firms": 2389114,
+      "employees": 1106334
+    },
+    {
+      "source": "industry:Construction",
+      "target": "employeeSize:1-9",
+      "firms": 5221520,
+      "employees": 7270887
+    },
+    {
+      "source": "industry:Accommodation and food services",
+      "target": "employeeSize:1-9",
+      "firms": 2882456,
+      "employees": 3294071
+    },
+    {
+      "source": "industry:Health care and social assistance",
+      "target": "employeeSize:1-9",
+      "firms": 2886786,
+      "employees": 1908800
+    },
+    {
+      "source": "industry:Mining, quarrying, and oil and gas extraction",
+      "target": "employeeSize:1-9",
+      "firms": 29980,
+      "employees": 65240
+    },
+    {
+      "source": "industry:Manufacturing",
+      "target": "employeeSize:1-9",
+      "firms": 2896756,
+      "employees": 4214179
+    },
+    {
+      "source": "industry:Administrative and support and waste management",
+      "target": "employeeSize:1-9",
+      "firms": 2503773,
+      "employees": 678719
+    },
+    {
+      "source": "industry:Real estate and rental and leasing",
+      "target": "employeeSize:1-9",
+      "firms": 2383590,
+      "employees": 1270562
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:50-249",
+      "firms": 2079,
+      "employees": 133996
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:50-249",
+      "firms": 6900,
+      "employees": 236816
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:1-9",
+      "firms": 487311,
+      "employees": 331469
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:1-9",
+      "firms": 149085,
+      "employees": 278569
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:20-49",
+      "firms": 7351,
+      "employees": 142962
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:20-49",
+      "firms": 11465,
+      "employees": 128188
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:10-19",
+      "firms": 28102,
+      "employees": 87957
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:10-19",
+      "firms": 15337,
+      "employees": 114851
+    },
+    {
+      "source": "industry:Agriculture, forestry, fishing and hunting",
+      "target": "employeeSize:250+",
+      "firms": 5171,
+      "employees": 113213
+    },
+    {
+      "source": "industry:Other services (except public administration)",
+      "target": "employeeSize:250+",
+      "firms": 14381,
+      "employees": 1044234
+    }
+  ],
+  "availablePairs": [
+    [
+      "industry",
+      "employeeSize"
+    ]
+  ]
+}

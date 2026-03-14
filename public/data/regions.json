@@ -1,6 +1,12 @@
 {
   "regions": [
     {
+      "id": "global",
+      "label": "Globally",
+      "group": null,
+      "hasRevenue": false
+    },
+    {
       "id": "us",
       "label": "United States",
       "group": null,
