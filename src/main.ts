@@ -1,4 +1,4 @@
-import { loadSankeyData, loadRegions, filterSankeyForDrill, getAvailableDimensions } from './data';
+import { loadSankeyData, loadRegions, filterSankeyForDrill, getAvailableDimensions, getMetricValue } from './data';
 import { renderSankey, SankeyHandle } from './sankey';
 import { initControls, setRevenueTabEnabled, setActiveTab, updateBreadcrumb } from './controls';
 import { updateSidebars } from './sidebar';
@@ -53,12 +53,86 @@ function toggleSelection(nodeId: string): void {
   }
   sankeyHandle?.updateSelection(currentSelectedIds);
   refreshSidebars(null);
+  updateSelectionSummary();
 }
 
 function clearSelection(): void {
   currentSelectedIds = new Set();
   sankeyHandle?.updateSelection(currentSelectedIds);
   refreshSidebars(null);
+  updateSelectionSummary();
+}
+
+function formatCompact(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toLocaleString();
+}
+
+function setSummaryContent(el: HTMLElement, parts: { text: string; className: string }[]): void {
+  while (el.firstChild) el.removeChild(el.firstChild);
+  for (const part of parts) {
+    const span = document.createElement('span');
+    span.className = part.className;
+    span.textContent = part.text;
+    el.appendChild(span);
+  }
+}
+
+function updateSelectionSummary(): void {
+  const el = document.getElementById('selection-summary');
+  if (!el) return;
+
+  if (currentSelectedIds.size === 0) {
+    el.textContent = '';
+    return;
+  }
+
+  const metricLabel = currentMetric === 'firms' ? 'firms' : 'employees';
+  const left = leftDim();
+  const right = rightDim();
+
+  const leftSelected = [...currentSelectedIds].filter(id => {
+    const node = currentFiltered.nodes.find(n => n.id === id);
+    return node && node.dimension === left;
+  });
+  const rightSelected = [...currentSelectedIds].filter(id => {
+    const node = currentFiltered.nodes.find(n => n.id === id);
+    return node && node.dimension === right;
+  });
+
+  if (leftSelected.length === 0 && rightSelected.length === 0) {
+    el.textContent = '';
+    return;
+  }
+
+  // Total = sum of links connected to left-side selections (or grand total if none)
+  const totalLinks = leftSelected.length > 0
+    ? currentFiltered.links.filter(l => leftSelected.some(id => l.source === id || l.target === id))
+    : currentFiltered.links;
+  const total = totalLinks.reduce((sum, l) => sum + getMetricValue(l, currentMetric), 0);
+
+  if (leftSelected.length > 0 && rightSelected.length > 0) {
+    // Selected = links connecting both sides
+    const selected = totalLinks
+      .filter(l => rightSelected.some(id => l.source === id || l.target === id))
+      .reduce((sum, l) => sum + getMetricValue(l, currentMetric), 0);
+
+    setSummaryContent(el, [
+      { text: formatCompact(selected), className: 'summary-selected' },
+      { text: ` of ${formatCompact(total)} ${metricLabel}`, className: 'summary-total' },
+    ]);
+  } else {
+    // Only one side selected — show just the total for that side
+    const sideSelected = leftSelected.length > 0 ? leftSelected : rightSelected;
+    const sideTotal = currentFiltered.links
+      .filter(l => sideSelected.some(id => l.source === id || l.target === id))
+      .reduce((sum, l) => sum + getMetricValue(l, currentMetric), 0);
+
+    setSummaryContent(el, [
+      { text: `${formatCompact(sideTotal)} ${metricLabel}`, className: 'summary-selected' },
+    ]);
+  }
 }
 
 function updateSourceAttribution(): void {
@@ -90,6 +164,7 @@ function refresh(): void {
     onNodeHover: handleNodeHover,
   }, currentMetric, currentSelectedIds);
   refreshSidebars(null);
+  updateSelectionSummary();
   updateBreadcrumb(currentState, handleBreadcrumbClick);
   updateSourceAttribution();
 }
