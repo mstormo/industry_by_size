@@ -32,3 +32,15 @@ export interface DrillState {
   path: Dimension[];
   selections: string[];
 }
+
+export interface RegionInfo {
+  id: string;
+  label: string;
+  group: string | null;
+  hasRevenue: boolean;
+}
+
+export interface RegionsData {
+  regions: RegionInfo[];
+  groups: Record<string, string>;
+}
