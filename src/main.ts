@@ -197,6 +197,7 @@ async function init(): Promise<void> {
     onDimensionChange: handleDimensionChange,
     onMetricChange: handleMetricChange,
     onRegionChange: handleRegionChange,
+    initialRegionId: currentRegionId,
   });
 
   let resizeTimer: ReturnType<typeof setTimeout>;

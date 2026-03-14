@@ -10,6 +10,7 @@ interface ControlsCallbacks {
   onDimensionChange: (dimension: Dimension) => void;
   onMetricChange: (metric: Metric) => void;
   onRegionChange: (regionId: string) => void;
+  initialRegionId?: string;
 }
 
 export function initControls(regionsData: RegionsData, callbacks: ControlsCallbacks): void {
@@ -40,6 +41,7 @@ export function initControls(regionsData: RegionsData, callbacks: ControlsCallba
   const regionSelect = document.getElementById('region-select') as HTMLSelectElement | null;
   if (regionSelect) {
     populateRegionSelect(regionSelect, regionsData);
+    regionSelect.value = callbacks.initialRegionId ?? regionsData.regions[0]?.id ?? '';
     regionSelect.addEventListener('change', () => {
       callbacks.onRegionChange(regionSelect.value);
     });
