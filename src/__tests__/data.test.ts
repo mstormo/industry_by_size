@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { filterSankeyForDrill, getAvailableDimensions, getMetricValue } from '../data';
-import type { SankeyData, SankeyLink, DrillState, Dimension } from '../types';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { filterSankeyForDrill, getAvailableDimensions, getMetricValue, sortNodes } from '../data';
+import type { SankeyData, SankeyLink, DrillState, Dimension, SankeyNode } from '../types';
 
 const MOCK_DATA: SankeyData = {
   dimensions: ['industry', 'employeeSize', 'revenueSize'],
@@ -106,5 +106,55 @@ describe('getMetricValue', () => {
   it('returns employees for employees metric', () => {
     const link: SankeyLink = { source: 'a', target: 'b', firms: 100, employees: 5000 };
     expect(getMetricValue(link, 'employees')).toBe(5000);
+  });
+});
+
+describe('sortNodes with OECD labels', () => {
+  it('sorts OECD employee size brackets correctly', () => {
+    const nodes: SankeyNode[] = [
+      { id: 'employeeSize:250+', label: '250+', dimension: 'employeeSize' },
+      { id: 'employeeSize:1-9', label: '1-9', dimension: 'employeeSize' },
+      { id: 'employeeSize:50-249', label: '50-249', dimension: 'employeeSize' },
+      { id: 'employeeSize:10-19', label: '10-19', dimension: 'employeeSize' },
+      { id: 'employeeSize:20-49', label: '20-49', dimension: 'employeeSize' },
+    ];
+    const sorted = sortNodes(nodes);
+    expect(sorted.map(n => n.label)).toEqual(['1-9', '10-19', '20-49', '50-249', '250+']);
+  });
+});
+
+describe('loadSankeyData', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  it('fetches region-specific JSON file', async () => {
+    const mockData = { dimensions: ['industry', 'employeeSize'], nodes: [], links: [], availablePairs: [] };
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    });
+    const { loadSankeyData } = await import('../data');
+    const data = await loadSankeyData('de');
+    expect(globalThis.fetch).toHaveBeenCalledWith('/data/sankey-de.json');
+    expect(data.dimensions).toEqual(['industry', 'employeeSize']);
+  });
+});
+
+describe('loadRegions', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  it('fetches regions.json', async () => {
+    const mockRegions = { regions: [{ id: 'us', label: 'United States', group: null, hasRevenue: true }], groups: {} };
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockRegions),
+    });
+    const { loadRegions } = await import('../data');
+    const data = await loadRegions();
+    expect(globalThis.fetch).toHaveBeenCalledWith('/data/regions.json');
+    expect(data.regions[0].id).toBe('us');
   });
 });
