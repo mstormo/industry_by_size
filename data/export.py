@@ -31,8 +31,13 @@ def generate_sankey_from_census(records: list[CensusRecord]) -> SankeyData:
         for nid, label, dim in sorted(nodes_set)
     ]
 
+    unique_dims: set[str] = set()
+    for r in records:
+        unique_dims.add(r.source_dimension)
+        unique_dims.add(r.target_dimension)
+
     return SankeyData(
-        dimensions=["industry", "employeeSize", "revenueSize"],
+        dimensions=sorted(unique_dims),
         nodes=nodes,
         links=links,
         availablePairs=sorted(available_pairs),

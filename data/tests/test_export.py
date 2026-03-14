@@ -34,7 +34,25 @@ SAMPLE_RECORDS = [
 
 def test_generate_sankey_has_correct_dimensions():
     data = generate_sankey_from_census(SAMPLE_RECORDS)
-    assert data.dimensions == ["industry", "employeeSize", "revenueSize"]
+    assert "industry" in data.dimensions
+    assert "employeeSize" in data.dimensions
+    assert "revenueSize" in data.dimensions
+    assert len(data.dimensions) == 3
+
+
+def test_dimensions_derived_from_data():
+    """Dimensions should be derived from records, not hardcoded."""
+    emp_only = [
+        CensusRecord(
+            source_dimension="industry", source_value="Manufacturing",
+            target_dimension="employeeSize", target_value="1-9",
+            firms=100, employees=500,
+        ),
+    ]
+    data = generate_sankey_from_census(emp_only)
+    assert "revenueSize" not in data.dimensions
+    assert "industry" in data.dimensions
+    assert "employeeSize" in data.dimensions
 
 
 def test_generate_sankey_nodes_created():
