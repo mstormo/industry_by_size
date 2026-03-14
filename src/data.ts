@@ -63,7 +63,7 @@ export function sortNodes(nodes: SankeyNode[]): SankeyNode[] {
 
 export async function loadRegions(): Promise<RegionsData> {
   if (cachedRegions) return cachedRegions;
-  const resp = await fetch('/data/regions.json');
+  const resp = await fetch(`${import.meta.env.BASE_URL}data/regions.json`);
   if (!resp.ok) throw new Error(`Failed to load regions: ${resp.status}`);
   cachedRegions = await resp.json();
   return cachedRegions!;
@@ -72,7 +72,7 @@ export async function loadRegions(): Promise<RegionsData> {
 export async function loadSankeyData(regionId: string): Promise<SankeyData> {
   const cached = cache.get(regionId);
   if (cached) return cached;
-  const resp = await fetch(`/data/sankey-${regionId}.json`);
+  const resp = await fetch(`${import.meta.env.BASE_URL}data/sankey-${regionId}.json`);
   if (!resp.ok) throw new Error(`Failed to load data for region ${regionId}: ${resp.status}`);
   const data: SankeyData = await resp.json();
   cache.set(regionId, data);
